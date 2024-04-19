@@ -42,6 +42,43 @@
 }
 
 #rentCar{
-  width: 150px
+  width: 200px;
+  margin-left: auto;
 }
 
+#clientName{
+  width: 100%;
+}
+
+#phoneNumber{
+  width: 100%;
+}
+
+#email{
+  width: 100%;
+}
+
+#placeOfIssue{
+  width: 100%;
+}
+
+#startRentDate{
+  width: 100%;
+}
+
+#finishRentDate{
+  width: 100%;
+}
+
+#comments{
+  width: 100%;
+}
+
+#submit{
+  width: 45%;
+  margin-right: 10%;
+}
+
+#reset{
+  width: 45%;
+}
