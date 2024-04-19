@@ -1,5 +1,5 @@
 #root {
-  max-width: 1280px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -41,44 +41,113 @@
   color: #888;
 }
 
-#rentCar{
-  width: 200px;
-  margin-left: auto;
+.App {
+  display: flex;
+  width: 1350px;
+  flex-direction: row;
 }
 
-#clientName{
+#rentCar {
+  width: 300px;
+  min-width: 300px;
+  float: left;
+  display: flow-root;
+  margin-top: 70px;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+
+#fullName{
   width: 100%;
 }
 
-#phoneNumber{
+#firstName,
+#lastName{
+  width: 40%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 4px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #333;
+  font-family: 'Comic Sans MS', sans-serif;
+}
+
+#phoneNumber,
+#email,
+#placeOfIssue,
+#startRentDate,
+#finishRentDate,
+#comments {
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #333;
+  font-family: 'Comic Sans MS', sans-serif;
+}
+
+#buttons{
   width: 100%;
 }
 
-#email{
-  width: 100%;
+#submit,
+#reset {
+  width: 44%;
+  padding: 5px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
 }
 
-#placeOfIssue{
-  width: 100%;
-}
 
-#startRentDate{
-  width: 100%;
-}
-
-#finishRentDate{
-  width: 100%;
-}
-
-#comments{
-  width: 100%;
-}
-
-#submit{
-  width: 45%;
+#submit {
+  background-color: #007bff;
   margin-right: 10%;
 }
 
-#reset{
-  width: 45%;
+#reset {
+  background-color: #dc3545;
+}
+
+#submit:hover {
+  background-color: #003d7f;
+}
+
+#reset:hover {
+  background-color: #9a000f;
+}
+
+#formResult {
+  margin-left: 150px;
+  margin-bottom: 20px;
+  text-align: center;
+  width: 500px;
+  height: 200px;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+
+#formResult th {
+  font-size: 18px;
+  color: #333;
+  font-family: 'Comic Sans MS', sans-serif;
+  padding: 10px;
+}
+
+#formResult td {
+  font-size: 16px;
+  color: #555;
+  font-family: 'Comic Sans MS', sans-serif;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }
