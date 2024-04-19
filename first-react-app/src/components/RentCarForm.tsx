@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import dayjs, { Dayjs } from 'dayjs';
 import InputMask from 'react-input-mask';
 
@@ -48,16 +48,26 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         setForm(initialFormState);
     };
 
+    const [startRentDate, setStartRentDate] = useState(new Date().toISOString().split('T')[0]);
+
+    const handleStartRentDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const nextDay = dayjs(e.target.value).add(1, 'day').format('YYYY-MM-DD');
+        setStartRentDate(nextDay);
+        handleDateChange('startRentDate')(e);
+    };
+
     return (
         <form onSubmit={(e) => { handleSubmit(e); onSubmit(e); }} id='rentCar'>
             <div id='fullName'>
-            <input 
+                <input 
                     id='firstName' 
                     name="firstName" 
                     value={form.firstName} 
                     onChange={handleChange} 
                     placeholder="First Name" 
                     required
+                    pattern="^[A-Z][a-z]*$"
+                    title="First name must start with a capital letter and contain only letters."
                 />
                 <input 
                     id='lastName' 
@@ -66,6 +76,8 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                     onChange={handleChange} 
                     placeholder="Last Name" 
                     required
+                    pattern="^[A-Z][a-z]*$"
+                    title="Last name must start with a capital letter and contain only letters."
                 />
             </div>
             <InputMask 
@@ -84,6 +96,8 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 onChange={handleChange} 
                 placeholder="Email" 
                 required
+                pattern=".+@.+"
+                title="Email must contain '@'."
             />
             <input 
                 id='placeOfIssue' 
@@ -92,13 +106,15 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 onChange={handleChange} 
                 placeholder="Place of Issue" 
                 required
+                pattern="^[A-Z][a-z]*$"
             />
             <input 
                 type="date" 
                 id="startRentDate" 
                 name="startRentDate" 
                 value={form.startRentDate.format('YYYY-MM-DD')} 
-                onChange={handleDateChange('startRentDate')} 
+                onChange={handleStartRentDateChange} 
+                min={new Date().toISOString().split('T')[0]}
                 required
             />
             <input 
@@ -107,6 +123,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 name="finishRentDate" 
                 value={form.finishRentDate.format('YYYY-MM-DD')} 
                 onChange={handleDateChange('finishRentDate')}
+                min={startRentDate}
                 required 
             />
             <textarea
