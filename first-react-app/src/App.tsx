@@ -14,6 +14,12 @@ function App() {
     setForm(initialFormState);
   };
 
+  const handleDelete = (index: number) => {
+    const newSubmittedForms = [...submittedForms];
+    newSubmittedForms.splice(index, 1);
+    setSubmittedForms(newSubmittedForms);
+  };
+
   return (
     <div className={styles.App}>
       <div className={styles.rent}>
@@ -21,7 +27,7 @@ function App() {
       </div>
       <div className={styles.result}>
         {submittedForms.map((form, index) => (
-          <FormResults key={index} form={form} />
+          <FormResults key={index} form={form} onDelete={() => handleDelete(index)} />
         ))}
       </div>
     </div>
