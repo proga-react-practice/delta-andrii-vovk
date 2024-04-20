@@ -4,9 +4,10 @@ import styles from '../App.module.css';
 
 interface FormResultsProps {
   form: RentCar;
+  onDelete: () => void; // Додаємо цей проп
 }
 
-const FormResults: React.FC<FormResultsProps> = ({ form }) => {
+const FormResults: React.FC<FormResultsProps> = ({ form, onDelete }) => {
     return (
         <table className={styles.formResult}>
             <tbody>
@@ -30,6 +31,7 @@ const FormResults: React.FC<FormResultsProps> = ({ form }) => {
                     <td>{form.finishRentDate.format('YYYY-MM-DD')}</td>
                     <td>{form.comments}</td>
                 </tr>
+                <button className={styles.deleteCard} onClick={onDelete}>Delete</button>
             </tbody>
         </table>
     );
