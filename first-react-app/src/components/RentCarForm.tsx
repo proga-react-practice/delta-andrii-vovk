@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import dayjs, { Dayjs } from 'dayjs';
 import InputMask from 'react-input-mask';
+import styles from '../App.module.css'; 
 
 export interface RentCar {
     firstName: string;
@@ -57,10 +58,10 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
     };
 
     return (
-        <form onSubmit={(e) => { handleSubmit(e); onSubmit(e); }} id='rentCar'>
-            <div id='fullName'>
+        <form onSubmit={(e) => { handleSubmit(e); onSubmit(e); }} className={styles.rentCar}>
+            <div id={styles.fullName}>
                 <input 
-                    id='firstName' 
+                    id={styles.firstName} 
                     name="firstName" 
                     value={form.firstName} 
                     onChange={handleChange} 
@@ -70,7 +71,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                     title="First name must start with a capital letter and contain only letters."
                 />
                 <input 
-                    id='lastName' 
+                    id={styles.lastName} 
                     name="lastName" 
                     value={form.lastName} 
                     onChange={handleChange} 
@@ -82,7 +83,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
             </div>
             <InputMask 
                 mask="+38(099) 999 9999"
-                id='phoneNumber' 
+                id={styles.phoneNumber} 
                 name="phoneNumber" 
                 value={form.phoneNumber} 
                 onChange={handleChange} 
@@ -90,7 +91,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 required 
             />
             <input 
-                id='email' 
+                id={styles.email} 
                 name="email" 
                 value={form.email} 
                 onChange={handleChange} 
@@ -100,7 +101,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 title="Email must contain '@'."
             />
             <input 
-                id='placeOfIssue' 
+                id={styles.placeOfIssue} 
                 name="placeOfIssue" 
                 value={form.placeOfIssue} 
                 onChange={handleChange} 
@@ -110,7 +111,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
             />
             <input 
                 type="date" 
-                id="startRentDate" 
+                id={styles.startRentDate} 
                 name="startRentDate" 
                 value={form.startRentDate.format('YYYY-MM-DD')} 
                 onChange={handleStartRentDateChange} 
@@ -119,7 +120,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
             />
             <input 
                 type="date" 
-                id="finishRentDate" 
+                id={styles.finishRentDate} 
                 name="finishRentDate" 
                 value={form.finishRentDate.format('YYYY-MM-DD')} 
                 onChange={handleDateChange('finishRentDate')}
@@ -127,20 +128,20 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 required 
             />
             <textarea
-                id='comments' 
+                id={styles.comments}
                 name="comments" 
                 value={form.comments} 
                 onChange={handleChange} 
                 placeholder="Comments" 
             />
-            <div id='buttons'>
+            <div id={styles.buttons}>
                 <button 
-                    id='submit' 
+                    id={styles.submit} 
                     type="submit">
                         Submit
                 </button>
                 <button 
-                    id='reset' 
+                    id={styles.reset} 
                     onClick={handleReset} 
                     type="reset">
                         Reset

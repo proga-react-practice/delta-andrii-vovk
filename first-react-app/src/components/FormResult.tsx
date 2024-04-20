@@ -1,5 +1,6 @@
 import React from 'react';
 import { RentCar } from './RentCarForm';
+import styles from '../App.module.css';
 
 interface FormResultsProps {
   form: RentCar;
@@ -7,7 +8,7 @@ interface FormResultsProps {
 
 const FormResults: React.FC<FormResultsProps> = ({ form }) => {
     return (
-        <table id='formResult'>
+        <table className={styles.formResult}>
             <tbody>
                 <tr>
                     <th>First Name:</th>

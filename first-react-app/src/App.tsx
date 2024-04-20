@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css';
+import styles from './App.module.css';
 import RentCarForm, { RentCar } from './components/RentCarForm';
 import FormResults from './components/FormResult';
 import dayjs from 'dayjs';
@@ -26,11 +26,11 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <div id='rent'>
+    <div className={styles.App}>
+      <div className={styles.rent}>
         <RentCarForm form={form} setForm={setForm} onSubmit={handleSubmit} />
       </div>
-      <div id='result'>
+      <div className={styles.result}>
         {submittedForms.map((form, index) => (
           <FormResults key={index} form={form} />
         ))}
