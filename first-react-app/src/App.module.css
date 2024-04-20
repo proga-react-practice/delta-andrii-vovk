@@ -127,11 +127,12 @@
 }
 
 .formResult {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
   margin-left: 150px;
   margin-bottom: 20px;
   text-align: center;
-  width: 500px;
-  height: 200px;
   background-color: #f8f9fa;
   padding: 20px;
   border-radius: 10px;
@@ -151,4 +152,15 @@
   font-family: 'Comic Sans MS', sans-serif;
   padding: 10px;
   border-bottom: 1px solid #ddd;
+}
+
+.deleteCard{
+  float: right;
+  margin-top: 7px;
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
+.deleteCard:hover {
+  background-color: #9a000f;
 }
