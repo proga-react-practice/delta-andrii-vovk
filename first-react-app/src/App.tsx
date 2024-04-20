@@ -1,21 +1,10 @@
 import React, { useState } from 'react';
 import styles from './App.module.css';
-import RentCarForm, { RentCar } from './components/RentCarForm';
+import RentCarForm from './components/RentCarForm';
 import FormResults from './components/FormResult';
-import dayjs from 'dayjs';
+import { RentCar, initialFormState } from './interfaces';
 
 function App() {
-  const initialFormState: RentCar = {
-    firstName: '',
-    lastName: '',
-    phoneNumber: '',
-    email: '',
-    placeOfIssue: '',
-    startRentDate: dayjs(),
-    finishRentDate: dayjs(),
-    comments: '',
-  };
-
   const [form, setForm] = useState<RentCar>(initialFormState);
   const [submittedForms, setSubmittedForms] = useState<RentCar[]>([]);
 
