@@ -1,18 +1,8 @@
 import React, { useState } from "react";
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import InputMask from 'react-input-mask';
 import styles from '../App.module.css'; 
-
-export interface RentCar {
-    firstName: string;
-    lastName: string;
-    phoneNumber: string;
-    email: string;
-    placeOfIssue: string;
-    startRentDate: Dayjs;
-    finishRentDate: Dayjs;
-    comments: string;
-}
+import { RentCar, initialFormState } from '../interfaces';
 
 interface RentCarFormProps {
     form: RentCar;
@@ -21,16 +11,6 @@ interface RentCarFormProps {
 }
 
 const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => {
-    const initialFormState: RentCar = {
-        firstName: '',
-        lastName: '',
-        phoneNumber: '',
-        email: '',
-        placeOfIssue: '',
-        startRentDate: dayjs(),
-        finishRentDate: dayjs(),
-        comments: '',
-    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
