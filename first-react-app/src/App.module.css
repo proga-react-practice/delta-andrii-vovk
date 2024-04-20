@@ -47,9 +47,10 @@
   flex-direction: row;
 }
 
-#rentCar {
+.rentCar {
   width: 300px;
   min-width: 300px;
+  margin-left: 50px;
   float: left;
   display: flow-root;
   margin-top: 70px;
@@ -69,7 +70,7 @@
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  margin: 4px;
+  margin-right: 7px;
   margin-bottom: 10px;
   font-size: 16px;
   color: #333;
@@ -125,7 +126,7 @@
   background-color: #9a000f;
 }
 
-#formResult {
+.formResult {
   margin-left: 150px;
   margin-bottom: 20px;
   text-align: center;
@@ -137,14 +138,14 @@
   box-shadow: 0 0 10px rgba(0,0,0,0.15);
 }
 
-#formResult th {
+.formResult th {
   font-size: 18px;
   color: #333;
   font-family: 'Comic Sans MS', sans-serif;
   padding: 10px;
 }
 
-#formResult td {
+.formResult td {
   font-size: 16px;
   color: #555;
   font-family: 'Comic Sans MS', sans-serif;
