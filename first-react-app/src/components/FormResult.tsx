@@ -1,5 +1,5 @@
 import React from 'react';
-import { RentCar } from './RentCarForm';
+import { RentCar } from '../interfaces';
 import styles from '../App.module.css';
 
 interface FormResultsProps {
