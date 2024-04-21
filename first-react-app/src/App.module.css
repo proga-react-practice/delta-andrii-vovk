@@ -48,11 +48,12 @@
 }
 
 .rentCar {
-  width: 300px;
-  min-width: 300px;
+  min-width: 250px;
+  max-width: 300px;
   margin-left: 50px;
   float: left;
-  display: flow-root;
+  display: flex;
+  flex-direction: column;
   margin-top: 70px;
   background-color: #f8f9fa;
   padding: 20px;
@@ -61,20 +62,29 @@
 }
 
 .fullName{
-  width: 100%;
+  width: 90%;
+  display: flex;  
+  justify-content: space-between;
 }
 
 .firstName,
 .lastName{
-  width: 40%;
+  width: calc(50% - 35px); 
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  margin-right: 7px;
   margin-bottom: 10px;
   font-size: 16px;
   color: #333;
   font-family: 'Comic Sans MS', sans-serif;
+}
+
+.firstName {
+  margin-right: 10px;
+}
+
+.lastName {
+  margin-left: 10px;
 }
 
 .phoneNumber,
@@ -127,8 +137,8 @@
 }
 
 .formResult {
-  position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   margin-left: 150px;
   margin-bottom: 20px;
