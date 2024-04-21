@@ -60,12 +60,12 @@
   box-shadow: 0 0 10px rgba(0,0,0,0.15);
 }
 
-#fullName{
+.fullName{
   width: 100%;
 }
 
-#firstName,
-#lastName{
+.firstName,
+.lastName{
   width: 40%;
   padding: 10px;
   border: 1px solid #ddd;
@@ -77,12 +77,12 @@
   font-family: 'Comic Sans MS', sans-serif;
 }
 
-#phoneNumber,
-#email,
-#placeOfIssue,
-#startRentDate,
-#finishRentDate,
-#comments {
+.phoneNumber,
+.email,
+.placeOfIssue,
+.startRentDate,
+.finishRentDate,
+.comments {
   width: 90%;
   padding: 10px;
   border: 1px solid #ddd;
@@ -93,12 +93,12 @@
   font-family: 'Comic Sans MS', sans-serif;
 }
 
-#buttons{
+.buttons{
   width: 100%;
 }
 
-#submit,
-#reset {
+.submit,
+.reset {
   width: 44%;
   padding: 5px;
   margin-top: 10px;
@@ -109,20 +109,20 @@
 }
 
 
-#submit {
+.submit {
   background-color: #007bff;
   margin-right: 10%;
 }
 
-#reset {
+.reset {
   background-color: #dc3545;
 }
 
-#submit:hover {
+.submit:hover {
   background-color: #003d7f;
 }
 
-#reset:hover {
+.reset:hover {
   background-color: #9a000f;
 }
 

@@ -36,7 +36,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         <form onSubmit={(e) => { onSubmit(e); }} className={styles.rentCar}>
             <div id={styles.fullName}>
                 <input 
-                    id={styles.firstName} 
+                    className={styles.firstName} 
                     name="firstName" 
                     value={form.firstName} 
                     onChange={handleChange} 
@@ -46,7 +46,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                     title="First name must start with a capital letter and contain only letters."
                 />
                 <input 
-                    id={styles.lastName} 
+                    className={styles.lastName} 
                     name="lastName" 
                     value={form.lastName} 
                     onChange={handleChange} 
@@ -58,7 +58,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
             </div>
             <InputMask 
                 mask="+38(099) 999 9999"
-                id={styles.phoneNumber} 
+                className={styles.phoneNumber} 
                 name="phoneNumber" 
                 value={form.phoneNumber} 
                 onChange={handleChange} 
@@ -66,7 +66,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 required 
             />
             <input 
-                id={styles.email} 
+                className={styles.email} 
                 name="email" 
                 value={form.email} 
                 onChange={handleChange} 
@@ -76,7 +76,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 title="Email must contain '@'."
             />
             <input 
-                id={styles.placeOfIssue} 
+                className={styles.placeOfIssue} 
                 name="placeOfIssue" 
                 value={form.placeOfIssue} 
                 onChange={handleChange} 
@@ -86,7 +86,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
             />
             <input 
                 type="date" 
-                id={styles.startRentDate} 
+                className={styles.startRentDate} 
                 name="startRentDate" 
                 value={form.startRentDate.format('YYYY-MM-DD')} 
                 onChange={handleStartRentDateChange} 
@@ -95,7 +95,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
             />
             <input 
                 type="date" 
-                id={styles.finishRentDate} 
+                className={styles.finishRentDate} 
                 name="finishRentDate" 
                 value={form.finishRentDate.format('YYYY-MM-DD')} 
                 onChange={handleDateChange('finishRentDate')}
@@ -103,20 +103,20 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 required 
             />
             <textarea
-                id={styles.comments}
+                className={styles.comments}
                 name="comments" 
                 value={form.comments} 
                 onChange={handleChange} 
                 placeholder="Comments" 
             />
-            <div id={styles.buttons}>
+            <div className={styles.buttons}>
                 <button 
-                    id={styles.submit} 
+                    className={styles.submit} 
                     type="submit">
                         Submit
                 </button>
                 <button 
-                    id={styles.reset} 
+                    className={styles.reset} 
                     onClick={handleReset} 
                     type="reset">
                         Reset
