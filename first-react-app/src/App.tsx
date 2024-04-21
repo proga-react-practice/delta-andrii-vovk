@@ -1,12 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './App.module.css';
 import RentCarForm from './components/RentCarForm';
-import FormResults from './components/FormResult';
+import { FormResults, FormResultsMobile } from './components/FormResult';
 import { RentCar, initialFormState } from './interfaces';
 
 function App() {
   const [form, setForm] = useState<RentCar>(initialFormState);
   const [submittedForms, setSubmittedForms] = useState<RentCar[]>([]);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,6 +40,8 @@ function App() {
       </div>
       <div className={styles.result}>
         {submittedForms.map((form, index) => (
+          isMobile ? 
+          <FormResultsMobile key={index} form={form} onDelete={() => handleDelete(index)} /> :
           <FormResults key={index} form={form} onDelete={() => handleDelete(index)} />
         ))}
       </div>

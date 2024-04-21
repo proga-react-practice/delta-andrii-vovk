@@ -4,10 +4,10 @@ import styles from '../App.module.css';
 
 interface FormResultsProps {
   form: RentCar;
-  onDelete: () => void; // Додаємо цей проп
+  onDelete: () => void;
 }
 
-const FormResults: React.FC<FormResultsProps> = ({ form, onDelete }) => {
+export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete }) => {
     return (
         <table className={styles.formResult}>
             <tbody>
@@ -37,4 +37,44 @@ const FormResults: React.FC<FormResultsProps> = ({ form, onDelete }) => {
     );
 };
 
-export default FormResults;
+export const FormResultsMobile: React.FC<FormResultsProps> = ({ form, onDelete }) => {
+    return (
+        <table className={styles.formResultMobile}>
+            <tbody>
+                <tr>
+                    <th>First Name:</th>
+                    <td>{form.firstName}</td>
+                </tr>
+                <tr>
+                    <th>Last Name:</th>
+                    <td>{form.lastName}</td>
+                </tr>
+                <tr>
+                    <th>Phone Number:</th>
+                    <td>{form.phoneNumber}</td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td>{form.email}</td>
+                </tr>
+                <tr>
+                    <th>Place of Issue:</th>
+                    <td>{form.placeOfIssue}</td>
+                </tr>
+                <tr>
+                    <th>Start Rent Date:</th>
+                    <td>{form.startRentDate.format('YYYY-MM-DD')}</td>
+                </tr>
+                <tr>
+                    <th>Finish Rent Date:</th>
+                    <td>{form.finishRentDate.format('YYYY-MM-DD')}</td>
+                </tr>
+                <tr>
+                    <th>Comments:</th>
+                    <td>{form.comments}</td>
+                </tr>
+                <button className={styles.deleteCard} onClick={onDelete}>Delete</button>
+            </tbody>
+        </table>
+    );
+};
