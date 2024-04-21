@@ -204,12 +204,68 @@
   color: #ffffff;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1420px) {
+  .rentCar {
+    margin-left: 250px;
+  }
+
+  .formResultMobile{
+    margin-top: 70px;
+  }
+}
+
+@media (max-width: 801px) {
   .App {
     flex-direction: column;
   }
 
   .rentCar {
     margin-left: 168px;
+  }
+}
+
+@media (max-width: 450px) {
+  .App {
+    flex-direction: column;
+  }
+
+  .rentCar {
+    margin-left: 40px;
+  }
+
+  .formResultMobile {
+    margin-left: 35px;
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 380px) {
+  .App {
+    flex-direction: column;
+  }
+
+  .rentCar {
+    margin-left: 40px;
+    max-width: 250px;
+  }
+
+  .firstName,
+  .lastName{
+    width: 90%; 
+  }
+
+  .lastName{
+    margin-left: 0;
+  }
+
+  .formResultMobile {
+    margin-left: 35px;
+    max-width: 300px;
+  }
+
+  .formResultMobile tr, 
+  .formResultMobile th{
+    display: flex;
+    width: 100%;
   }
 }

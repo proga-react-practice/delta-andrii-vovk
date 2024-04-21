@@ -7,11 +7,11 @@ import { RentCar, initialFormState } from './interfaces';
 function App() {
   const [form, setForm] = useState<RentCar>(initialFormState);
   const [submittedForms, setSubmittedForms] = useState<RentCar[]>([]);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1420);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1420);
     };
 
     window.addEventListener('resize', handleResize);
