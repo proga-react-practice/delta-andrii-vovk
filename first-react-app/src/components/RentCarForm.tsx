@@ -20,11 +20,6 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         setForm({ ...form, [name]: dayjs(e.target.value) });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log(form);
-    };
-
     const handleReset = () => {
         setForm(initialFormState);
     };
@@ -38,7 +33,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
     };
 
     return (
-        <form onSubmit={(e) => { handleSubmit(e); onSubmit(e); }} className={styles.rentCar}>
+        <form onSubmit={(e) => { onSubmit(e); }} className={styles.rentCar}>
             <div id={styles.fullName}>
                 <input 
                     id={styles.firstName} 
