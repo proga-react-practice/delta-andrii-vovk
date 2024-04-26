@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import styles from './App.module.css';
 import RentCarForm from './components/RentCarForm';
-import { FormResults, FormResultsMobile } from './components/FormResult';
+import { FormResults, FormResultsMobile} from './components/FormResult';
 import { RentCar, initialFormState } from './interfaces';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme';
+import Box from '@mui/material/Box';
 
 function App() {
   const [form, setForm] = useState<RentCar>(initialFormState);
@@ -33,19 +35,36 @@ function App() {
     setSubmittedForms(newSubmittedForms);
   };
 
+  const AppStyle = {
+    display: 'flex',
+    width: '1350px',
+    flexDirection: 'row',
+    '@media (max-width: 811px)': {
+      flexDirection: 'column',
+    },
+    '@media (max-width: 450px)': {
+      flexDirection: 'column',
+    },
+    '@media (max-width: 380px)': {
+      flexDirection: 'column',
+    },
+  }
+
   return (
-    <div className={styles.App}>
-      <div className={styles.rent}>
-        <RentCarForm form={form} setForm={setForm} onSubmit={handleSubmit} />
-      </div>
-      <div className={styles.result}>
-        {submittedForms.map((form, index) => (
-          isMobile ? 
-          <FormResultsMobile key={index} form={form} onDelete={() => handleDelete(index)} /> :
-          <FormResults key={index} form={form} onDelete={() => handleDelete(index)} />
-        ))}
-      </div>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Box sx={ AppStyle }>
+        <Box>
+          <RentCarForm form={form} setForm={setForm} onSubmit={handleSubmit} />
+        </Box>
+        <Box>
+          {submittedForms.map((form, index) => (
+            isMobile ? 
+            <FormResultsMobile key={index} form={form} onDelete={() => handleDelete(index)} /> :
+            <FormResults key={index} form={form} onDelete={() => handleDelete(index)} />
+          ))}
+        </Box>
+      </Box>
+    </ThemeProvider>
   );
 }
 

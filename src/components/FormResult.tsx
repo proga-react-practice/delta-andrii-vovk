@@ -1,6 +1,95 @@
 import React from 'react';
 import { RentCar } from '../interfaces';
-import styles from '../App.module.css';
+import { Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
+import { styled } from '@mui/system';
+
+// const StyledTable = styled(Table)(() => ({
+//   display: 'flex',
+//   flexDirection: 'column',
+//   justifyContent: 'space-between',
+//   marginLeft: 150,
+//   marginBottom: 20,
+//   textAlign: 'center',
+//   backgroundColor: '#f8f9fa',
+//   padding: 20,
+//   borderRadius: 10,
+//   boxShadow: '0 0 10px rgba(0,0,0,0.15)',
+// }));
+
+const FormResultStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  marginLeft: '140px',
+  marginBottom: '20px',
+  marginTop: '50px',
+  backgroundColor: '#f8f9fa',
+  borderRadius: '5px',
+  boxShadow: '0 0 10px rgba(0,0,0,0.15)',
+}
+
+const MobileStyle = {
+  display: 'flex',
+  maxWidth: '400px',
+  marginLeft: '140px',
+  marginBottom: '20px',
+  marginTop: '50px',
+  backgroundColor: '#f8f9fa',
+  borderRadius: '5px',
+  boxShadow: '0 0 10px rgba(0,0,0,0.25)',
+
+  '@media (max-width: 1420px)': {
+      marginTop: '70px',
+  },
+  '@media (max-width: 450px)': {
+      marginLeft: '35px',
+      maxWidth: '350px',
+  },
+  '@media (max-width: 380px)': {
+      marginLeft: '35px',
+      maxWidth: '300px',
+  },
+}
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  fontSize: 16,
+  textAlign: 'center',
+  color: '#555',
+  fontFamily: "'Comic Sans MS', sans-serif",
+  padding: 10,
+  borderBottom: '1px solid #ddd',
+  
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common ? theme.palette.common.black : '#000',
+    color: theme.palette.common ? theme.palette.common.white : '#fff',
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableCellMobile = styled(StyledTableCell)(( )=> ({
+  textAlign: 'left',
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action ? theme.palette.action.hover : '#f5f5f5',
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
+
+const StyledButton = styled(Button)(() => ({
+  width: '100%',
+  backgroundColor: '#dc3545',
+  color: '#ffffff',
+  '&:hover': {
+    backgroundColor: '#9a000f',
+  },
+}));
 
 interface FormResultsProps {
   form: RentCar;
@@ -9,72 +98,89 @@ interface FormResultsProps {
 
 export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete }) => {
     return (
-        <table className={styles.formResult}>
-            <tbody>
-                <tr>
-                    <th>First Name:</th>
-                    <th>Last Name:</th>
-                    <th>Phone Number:</th>
-                    <th>Email:</th>
-                    <th>Place of Issue:</th>
-                    <th>Start Rent Date:</th>
-                    <th>Finish Rent Date:</th>
-                    <th>Comments:</th>
-                </tr>
-                <tr>
-                    <td>{form.firstName}</td>
-                    <td>{form.lastName}</td>
-                    <td>{form.phoneNumber}</td>
-                    <td>{form.email}</td>
-                    <td>{form.placeOfIssue}</td>
-                    <td>{form.startRentDate.format('YYYY-MM-DD')}</td>
-                    <td>{form.finishRentDate.format('YYYY-MM-DD')}</td>
-                    <td>{form.comments}</td>
-                </tr>
-                <button className={styles.deleteCard} onClick={onDelete}>Delete</button>
-            </tbody>
-        </table>
+      <TableContainer component={Paper} sx={FormResultStyle}>
+          <Table aria-label="customize table">
+              <TableHead>
+              <TableRow>
+                  <StyledTableCell>First Name</StyledTableCell>
+                  <StyledTableCell>Last Name</StyledTableCell>
+                  <StyledTableCell>Phone Number</StyledTableCell>
+                  <StyledTableCell>Email</StyledTableCell>
+                  <StyledTableCell>Place Of Issue</StyledTableCell>
+                  <StyledTableCell>Start Rent Date</StyledTableCell>
+                  <StyledTableCell>End Rent Date</StyledTableCell>
+                  <StyledTableCell>Comments</StyledTableCell>
+              </TableRow>
+              </TableHead>
+              <TableBody>
+              <StyledTableRow>
+                    <StyledTableCell>{form.firstName}</StyledTableCell>
+                    <StyledTableCell>{form.lastName}</StyledTableCell>
+                    <StyledTableCell>{form.phoneNumber}</StyledTableCell>
+                    <StyledTableCell>{form.email}</StyledTableCell>
+                    <StyledTableCell>{form.placeOfIssue}</StyledTableCell>
+                    <StyledTableCell>{form.startRentDate.format('YYYY-MM-DD')}</StyledTableCell>
+                    <StyledTableCell>{form.finishRentDate.format('YYYY-MM-DD')}</StyledTableCell>
+                    <StyledTableCell>{form.comments}</StyledTableCell>
+              </StyledTableRow>
+              <StyledTableRow>
+                <StyledTableCell colSpan={7} />
+                    <StyledTableCell colSpan={1}>
+                        <StyledButton onClick={onDelete}>Delete</StyledButton>
+                    </StyledTableCell>
+              </StyledTableRow>
+              </TableBody>
+          </Table>
+      </TableContainer>
     );
 };
 
 export const FormResultsMobile: React.FC<FormResultsProps> = ({ form, onDelete }) => {
-    return (
-        <table className={styles.formResultMobile}>
-            <tbody>
-                <tr>
-                    <th>First Name:</th>
-                    <td>{form.firstName}</td>
-                </tr>
-                <tr>
-                    <th>Last Name:</th>
-                    <td>{form.lastName}</td>
-                </tr>
-                <tr>
-                    <th>Phone Number:</th>
-                    <td>{form.phoneNumber}</td>
-                </tr>
-                <tr>
-                    <th>Email:</th>
-                    <td>{form.email}</td>
-                </tr>
-                <tr>
-                    <th>Place of Issue:</th>
-                    <td>{form.placeOfIssue}</td>
-                </tr>
-                <tr>
-                    <th>Start Rent Date:</th>
-                    <td>{form.startRentDate.format('YYYY-MM-DD')}</td>
-                </tr>
-                <tr>
-                    <th>Finish Rent Date:</th>
-                    <td>{form.finishRentDate.format('YYYY-MM-DD')}</td>
-                </tr>
-                <tr>
-                    <th>Comments:</th>
-                    <td>{form.comments}</td>
-                </tr>
-                <button className={styles.deleteCard} onClick={onDelete}>Delete</button>
-            </tbody>
-        </table>
-    );
+  return (
+    <TableContainer component={Paper} 
+    sx={ MobileStyle }
+    >
+        <Table aria-label="customize table">
+            <TableBody>
+                <StyledTableRow>
+                    <StyledTableCellMobile>First Name</StyledTableCellMobile>
+                    <StyledTableCellMobile>{form.firstName}</StyledTableCellMobile>
+                </StyledTableRow>
+                <StyledTableRow>
+                    <StyledTableCellMobile>Last Name</StyledTableCellMobile>
+                    <StyledTableCellMobile>{form.lastName}</StyledTableCellMobile>
+                </StyledTableRow>
+                <StyledTableRow>
+                    <StyledTableCellMobile>Phone Number</StyledTableCellMobile>
+                    <StyledTableCellMobile>{form.phoneNumber}</StyledTableCellMobile>
+                </StyledTableRow>
+                <StyledTableRow>
+                    <StyledTableCellMobile>Email</StyledTableCellMobile>
+                    <StyledTableCellMobile>{form.email}</StyledTableCellMobile>
+                </StyledTableRow>
+                <StyledTableRow>
+                    <StyledTableCellMobile>Place Of Issue</StyledTableCellMobile>
+                    <StyledTableCellMobile>{form.placeOfIssue}</StyledTableCellMobile>
+                </StyledTableRow>
+                <StyledTableRow>
+                    <StyledTableCellMobile>Start Rent Date</StyledTableCellMobile>
+                    <StyledTableCellMobile>{form.startRentDate.format('YYYY-MM-DD')}</StyledTableCellMobile>
+                </StyledTableRow>
+                <StyledTableRow>
+                    <StyledTableCellMobile>End Rent Date</StyledTableCellMobile>
+                    <StyledTableCellMobile>{form.finishRentDate.format('YYYY-MM-DD')}</StyledTableCellMobile>
+                </StyledTableRow>
+                <StyledTableRow>
+                    <StyledTableCellMobile>Comments</StyledTableCellMobile>
+                    <StyledTableCellMobile>{form.comments}</StyledTableCellMobile>
+                </StyledTableRow>
+                <StyledTableRow sx={{ backgroundColor: 'f5f5f5', justifyContent: 'flex-end',}}>
+                    <StyledTableCellMobile colSpan={2}>
+                        <StyledButton onClick={onDelete}>Delete</StyledButton>
+                    </StyledTableCellMobile>
+                </StyledTableRow>
+            </TableBody>
+        </Table>
+    </TableContainer>
+  );
 };
