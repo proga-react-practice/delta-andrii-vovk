@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import dayjs from 'dayjs';
 import InputMask from 'react-input-mask';
 import { RentCar, initialFormState } from '../interfaces';
-import { TextField, Button, Box } from '@mui/material';
+import { TextField, Button, Box, useTheme } from '@mui/material';
 
 interface RentCarFormProps {
     form: RentCar;
@@ -11,6 +11,8 @@ interface RentCarFormProps {
 }
 
 const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => {
+
+    const theme = useTheme();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -35,7 +37,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
     const FormStyle = {
         minWidth: '250px',
         maxWidth: '300px',
-        marginLeft: '50px',
+        marginLeft: '100px',
         float: 'left',
         display: 'flex',
         flexDirection: 'column',
@@ -44,6 +46,22 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         padding: '20px',
         borderRadius: '10px',
         boxShadow: '0 0 10px rgba(0,0,0,0.20)',
+        '@media (max-width: 1420px)': {
+            marginLeft: '250px',
+        },
+        '@media (max-width:1081px)': {
+            marginLeft: '120px',
+        },
+        '@media (max-width: 811px)': {
+            marginLeft: '168px',
+        },
+        '@media (max-width: 450px)': {
+            marginLeft: '40px',
+        },
+        '@media (max-width: 380px)': {
+            marginLeft: '50px',
+            maxWidth: '250px',
+        },
     }
 
     const FullNameStyle = {
@@ -59,7 +77,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         marginBottom: '10px',
         fontSize: '16px',
         color: '#333',
-        fontFamily: 'Comic Sans MS, sans-serif',
+        fontFamily: theme.typography.fontFamily,
     }
 
     const TextFieldStyle = {
@@ -69,7 +87,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         marginBottom: '10px',
         fontSize: '16px',
         color: '#333',
-        fontFamily: 'Comic Sans MS, sans-serif',
+        fontFamily: theme.typography.fontFamily,
     }
 
     const SubmitButtonStyle = {
@@ -139,17 +157,14 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 value={form.phoneNumber}
                 onChange={handleChange}
             >
-                {(inputProps) => (
-                    <TextField
-                        {...inputProps}
-                        name="phoneNumber"
-                        label="Phone Number"
-                        placeholder="+38(0__) ___ ____"
-                        required
-                        title="Please enter a valid phone number in the format: +38(0__) ___ ____"
-                        sx={TextFieldStyle}
-                    />
-                )}
+                <TextField
+                    name="phoneNumber"
+                    label="Phone Number"
+                    placeholder="+38(0__) ___ ____"
+                    required
+                    title="Please enter a valid phone number in the format: +38(0__) ___ ____"
+                    sx={TextFieldStyle}
+                />
             </InputMask>
             <TextField 
                 className="email"
