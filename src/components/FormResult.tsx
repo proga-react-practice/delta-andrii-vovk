@@ -76,7 +76,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action ? theme.palette.action.hover : '#f5f5f5',
   },
-  // hide last border
   '&:last-child td, &:last-child th': {
     border: 0,
   },
@@ -110,6 +109,7 @@ export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete }) => {
                   <StyledTableCell>Start Rent Date</StyledTableCell>
                   <StyledTableCell>End Rent Date</StyledTableCell>
                   <StyledTableCell>Comments</StyledTableCell>
+                  <StyledTableCell>Action</StyledTableCell>
               </TableRow>
               </TableHead>
               <TableBody>
@@ -122,10 +122,7 @@ export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete }) => {
                     <StyledTableCell>{form.startRentDate.format('YYYY-MM-DD')}</StyledTableCell>
                     <StyledTableCell>{form.finishRentDate.format('YYYY-MM-DD')}</StyledTableCell>
                     <StyledTableCell>{form.comments}</StyledTableCell>
-              </StyledTableRow>
-              <StyledTableRow>
-                <StyledTableCell colSpan={7} />
-                    <StyledTableCell colSpan={1}>
+                    <StyledTableCell>
                         <StyledButton onClick={onDelete}>Delete</StyledButton>
                     </StyledTableCell>
               </StyledTableRow>
