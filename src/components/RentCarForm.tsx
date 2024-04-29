@@ -63,19 +63,19 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         padding: '20px',
         borderRadius: '10px',
         boxShadow: '0 0 10px rgba(0,0,0,0.20)',
-        '@media (max-width: 1420px)': {
+        [theme.breakpoints.up('lg')]: {
             marginLeft: '250px',
         },
-        '@media (max-width:1081px)': {
+        [theme.breakpoints.between('md', 'lg')]: {
             marginLeft: '120px',
         },
-        '@media (max-width: 811px)': {
+        [theme.breakpoints.between('sm', 'md')]: {
             marginLeft: '168px',
         },
-        '@media (max-width: 450px)': {
+        [theme.breakpoints.down('sm')]: {
             marginLeft: '40px',
         },
-        '@media (max-width: 380px)': {
+        [theme.breakpoints.down('xs')]: {
             marginLeft: '50px',
             maxWidth: '250px',
         },
@@ -115,7 +115,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         marginTop: '10px',
         border: 'none',
         borderRadius: '5px',
-        color: '#ffffff',
+        color: theme.palette.secondary.dark,
         backgroundColor: theme.palette.info.light,
         marginRight: '10%', 
         '&:hover': {
