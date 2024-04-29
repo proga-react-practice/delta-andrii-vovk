@@ -1,46 +1,11 @@
 import React from 'react';
 import { RentCar } from '../interfaces';
-import { Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, Paper, Button, } from '@mui/material';
+import { Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, Paper, Button, useTheme } from '@mui/material';
 import { styled } from '@mui/system';
 
 interface FormResultsProps {
   form: RentCar;
   onDelete: () => void;
-}
-
-const FormResultStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  marginLeft: '140px',
-  marginBottom: '20px',
-  marginTop: '50px',
-  backgroundColor: '#f8f9fa',
-  borderRadius: '5px',
-  boxShadow: '0 0 10px rgba(0,0,0,0.15)',
-}
-
-const MobileStyle = {
-  display: 'flex',
-  maxWidth: '400px',
-  marginLeft: '140px',
-  marginBottom: '20px',
-  marginTop: '50px',
-  backgroundColor: '#f8f9fa',
-  borderRadius: '5px',
-  boxShadow: '0 0 10px rgba(0,0,0,0.25)',
-
-  '@media (max-width: 1420px)': {
-      marginTop: '70px',
-  },
-  '@media (max-width: 450px)': {
-      marginLeft: '35px',
-      maxWidth: '350px',
-  },
-  '@media (max-width: 380px)': {
-      marginLeft: '35px',
-      maxWidth: '300px',
-  },
 }
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
@@ -83,6 +48,20 @@ const StyledButton = styled(Button)(({theme}) => ({
 }));
 
 export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete }) => {
+  const theme = useTheme()
+
+  const FormResultStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    marginLeft: '140px',
+    marginBottom: '20px',
+    marginTop: '50px',
+    backgroundColor: theme.palette.background.default,
+    borderRadius: '5px',
+    boxShadow: '0 0 10px rgba(0,0,0,0.15)',
+  }
+
     return (
       <TableContainer component={Paper} sx={FormResultStyle}>
           <Table aria-label="customize table">
@@ -120,6 +99,31 @@ export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete }) => {
 };
 
 export const FormResultsMobile: React.FC<FormResultsProps> = ({ form, onDelete }) => {
+  const theme = useTheme()
+
+  const MobileStyle = {
+    display: 'flex',
+    maxWidth: '400px',
+    marginLeft: '140px',
+    marginBottom: '20px',
+    marginTop: '50px',
+    backgroundColor: theme.palette.background.default,
+    borderRadius: '5px',
+    boxShadow: '0 0 10px rgba(0,0,0,0.25)',
+  
+    '@media (max-width: 1420px)': {
+        marginTop: '70px',
+    },
+    '@media (max-width: 450px)': {
+        marginLeft: '35px',
+        maxWidth: '350px',
+    },
+    '@media (max-width: 380px)': {
+        marginLeft: '35px',
+        maxWidth: '300px',
+    },
+  }  
+
   return (
     <TableContainer component={Paper} 
     sx={ MobileStyle }
