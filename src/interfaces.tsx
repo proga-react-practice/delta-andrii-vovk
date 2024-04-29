@@ -21,3 +21,11 @@ export const initialFormState: RentCar = {
     finishRentDate: dayjs(),
     comments: '',
 };
+
+export interface FieldErrors {
+    firstName: boolean;
+    lastName: boolean;
+    phoneNumber: boolean;
+    email: boolean;
+    placeOfIssue: boolean;
+}
