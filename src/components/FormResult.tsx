@@ -1,7 +1,12 @@
 import React from 'react';
 import { RentCar } from '../interfaces';
-import { Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
+import { Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, Paper, Button, } from '@mui/material';
 import { styled } from '@mui/system';
+
+interface FormResultsProps {
+  form: RentCar;
+  onDelete: () => void;
+}
 
 // const StyledTable = styled(Table)(() => ({
 //   display: 'flex',
@@ -51,7 +56,7 @@ const MobileStyle = {
   },
 }
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)(({theme}) => ({
   fontSize: 16,
   textAlign: 'center',
   color: '#555',
@@ -68,7 +73,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableCellMobile = styled(StyledTableCell)(( )=> ({
+const StyledTableCellMobile = styled(StyledTableCell)(() => ({
   textAlign: 'left',
 }));
 
@@ -81,19 +86,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const StyledButton = styled(Button)(() => ({
+const StyledButton = styled(Button)(({theme}) => ({
   width: '100%',
-  backgroundColor: '#dc3545',
+  backgroundColor: theme.palette.error.light,
   color: '#ffffff',
   '&:hover': {
-    backgroundColor: '#9a000f',
+    backgroundColor: theme.palette.error.dark,
   },
 }));
-
-interface FormResultsProps {
-  form: RentCar;
-  onDelete: () => void;
-}
 
 export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete }) => {
     return (

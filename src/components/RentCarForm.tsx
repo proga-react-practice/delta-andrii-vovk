@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import dayjs from 'dayjs';
 import InputMask from 'react-input-mask';
-import { RentCar, initialFormState } from '../interfaces';
+import { RentCar, initialFormState, FieldErrors } from '../interfaces';
 import { TextField, Button, Box, useTheme } from '@mui/material';
 
 interface RentCarFormProps {
@@ -34,6 +34,23 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         handleDateChange('startRentDate')(e);
     };
 
+    const [fieldErrors, setFieldErrors] = useState({
+        firstName: false,
+        lastName: false,
+        phoneNumber: false,
+        email: false,
+        placeOfIssue: false,
+    });
+    
+    const handleFieldChange = (name: string, pattern: RegExp) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setFieldErrors({
+            ...fieldErrors,
+            [name]: !value.match(pattern),
+        });
+        handleChange(e);
+    };
+
     const FormStyle = {
         minWidth: '250px',
         maxWidth: '300px',
@@ -42,7 +59,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         display: 'flex',
         flexDirection: 'column',
         marginTop: '70px',
-        backgroundColor: '#f8f9fa',
+        backgroundColor: theme.palette.background.default,
         padding: '20px',
         borderRadius: '10px',
         boxShadow: '0 0 10px rgba(0,0,0,0.20)',
@@ -74,6 +91,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         width: 'calc(50% - 5px)',
         padding: '10px',
         borderRadius: '5px',
+        borderColor: (fieldErrors: FieldErrors, fieldName: keyof FieldErrors) => fieldErrors[fieldName] ? theme.palette.error.main : theme.palette.primary.main,
         marginBottom: '10px',
         fontSize: '16px',
         color: '#333',
@@ -84,6 +102,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         width: '90%',
         padding: '10px',
         borderRadius: '5px',
+        borderColor: (fieldErrors: FieldErrors, fieldName: keyof FieldErrors) => fieldErrors[fieldName] ? theme.palette.error.main : theme.palette.primary.main,
         marginBottom: '10px',
         fontSize: '16px',
         color: '#333',
@@ -97,10 +116,10 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         border: 'none',
         borderRadius: '5px',
         color: '#ffffff',
-        backgroundColor: '#007bff',
+        backgroundColor: theme.palette.info.light,
         marginRight: '10%', 
         '&:hover': {
-            backgroundColor: '#003d7f',
+            backgroundColor: theme.palette.info.dark,
         },
     }
 
@@ -111,9 +130,9 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         border: 'none',
         borderRadius: '5px',
         color: '#ffffff',
-        backgroundColor: '#dc3545',
+        backgroundColor: theme.palette.error.light,
         '&:hover': {
-            backgroundColor: '#9a000f',
+            backgroundColor: theme.palette.error.dark,
         },
     }
 
@@ -128,28 +147,36 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 sx={FullNameStyle}
             >
                 <TextField 
+                    error={fieldErrors.firstName}
                     className="firstName" 
                     label="First Name"
                     name="firstName" 
                     value={form.firstName} 
-                    onChange={handleChange} 
+                    onChange={handleFieldChange('firstName', /^[A-Z][a-z]*$/)} 
                     placeholder="First Name" 
                     required
                     inputProps = {{ pattern: "^[A-Z][a-z]*$" }}
                     title="First name must start with a capital letter and contain only letters."
-                    sx={FirstAndLastNameStyle}
+                    sx={{
+                        ...FirstAndLastNameStyle,
+                        borderColor: fieldErrors.firstName ? theme.palette.error.main : theme.palette.primary.main,
+                    }}
                 />
                 <TextField 
+                    error={fieldErrors.lastName}
                     className="lastName" 
                     label="Last Name"
                     name="lastName" 
                     value={form.lastName} 
-                    onChange={handleChange} 
+                    onChange={handleFieldChange('lastName', /^[A-Z][a-z]*$/)} 
                     placeholder="Last Name" 
                     required
                     inputProps = {{ pattern: "^[A-Z][a-z]*$" }}
                     title="Last name must start with a capital letter and contain only letters."
-                    sx={FirstAndLastNameStyle}
+                    sx={{
+                        ...FirstAndLastNameStyle,
+                        borderColor: fieldErrors.lastName ? theme.palette.error.main : theme.palette.primary.main,
+                    }}
                 />
             </Box>
             <InputMask
@@ -163,31 +190,42 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                     placeholder="+38(0__) ___ ____"
                     required
                     title="Please enter a valid phone number in the format: +38(0__) ___ ____"
-                    sx={TextFieldStyle}
+                    sx={{
+                        ...TextFieldStyle,
+                        borderColor: fieldErrors.phoneNumber ? theme.palette.error.main : theme.palette.primary.main,
+                    }}
                 />
             </InputMask>
             <TextField 
+                error={fieldErrors.email}
                 className="email"
                 label="Email" 
                 name="email" 
                 value={form.email} 
-                onChange={handleChange} 
+                onChange={handleFieldChange('email', /.+@.+/)}  
                 placeholder="Email" 
                 required
                 inputProps={{ pattern: ".+@.+" }}
                 title="Email must contain '@'."
-                sx={TextFieldStyle}
+                sx={{
+                    ...TextFieldStyle,
+                    borderColor: fieldErrors.email ? theme.palette.error.main : theme.palette.primary.main,
+                }}
             />
             <TextField 
+                error={fieldErrors.placeOfIssue}
                 className="placeOfIssue"
                 label="Place of Issue"   
                 name="placeOfIssue" 
                 value={form.placeOfIssue} 
-                onChange={handleChange} 
+                onChange={handleFieldChange('placeOfIssue', /^[A-Z][a-z]*$/)}  
                 placeholder="Place of Issue" 
                 required
                 inputProps={{ pattern: "^[A-Z][a-z]*$" }}
-                sx={TextFieldStyle}
+                sx={{
+                    ...TextFieldStyle,
+                    borderColor: fieldErrors.placeOfIssue ? theme.palette.error.main : theme.palette.primary.main,
+                }}
             />
             <TextField 
                 type="date" 
@@ -199,7 +237,10 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 onChange={handleStartRentDateChange} 
                 inputProps={{ min: new Date().toISOString().split('T')[0] }}
                 required
-                sx={TextFieldStyle}
+                sx={{
+                    ...TextFieldStyle,
+                    borderColor: theme.palette.primary.main,
+                }}
             />
             <TextField 
                 type="date" 
@@ -210,7 +251,10 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 onChange={handleDateChange('finishRentDate')}
                 required 
                 inputProps={{ min: startRentDate }}
-                sx={TextFieldStyle}
+                sx={{
+                    ...TextFieldStyle,
+                    borderColor: theme.palette.primary.main,
+                }}
             />
             <TextField
                 className="comments"
@@ -219,7 +263,10 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 value={form.comments} 
                 onChange={handleChange} 
                 placeholder="Comments" 
-                sx={TextFieldStyle}
+                sx={{
+                    ...TextFieldStyle,
+                    borderColor: theme.palette.primary.main,
+                }}
             />
             <Box 
                 className="buttons"
