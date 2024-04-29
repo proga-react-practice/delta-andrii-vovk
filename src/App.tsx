@@ -38,16 +38,7 @@ function App() {
   const AppStyle = {
     display: 'flex',
     width: '1350px',
-    flexDirection: 'row',
-    '@media (max-width: 811px)': {
-      flexDirection: 'column',
-    },
-    '@media (max-width: 450px)': {
-      flexDirection: 'column',
-    },
-    '@media (max-width: 380px)': {
-      flexDirection: 'column',
-    },
+    flexDirection: {xs: 'column', md: 'row'},
   }
 
   return (
