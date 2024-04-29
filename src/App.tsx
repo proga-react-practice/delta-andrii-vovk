@@ -1,27 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import RentCarForm from './components/RentCarForm';
 import { FormResults, FormResultsMobile} from './components/FormResult';
 import { RentCar, initialFormState } from './interfaces';
 import { ThemeProvider } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 import theme from './theme';
 import Box from '@mui/material/Box';
 
 function App() {
   const [form, setForm] = useState<RentCar>(initialFormState);
   const [submittedForms, setSubmittedForms] = useState<RentCar[]>([]);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 1420);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 1420);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
