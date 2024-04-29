@@ -11,14 +11,14 @@ interface FormResultsProps {
 const StyledTableCell = styled(TableCell)(({theme}) => ({
   fontSize: 16,
   textAlign: 'center',
-  color: '#555',
+  color: theme.palette.primary.light,
   fontFamily: "'Comic Sans MS', sans-serif",
   padding: 10,
   borderBottom: '1px solid #ddd',
   
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common ? theme.palette.common.black : '#000',
-    color: theme.palette.common ? theme.palette.common.white : '#fff',
+    backgroundColor: theme.palette.secondary.light,
+    color: theme.palette.secondary.dark,
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -31,7 +31,7 @@ const StyledTableCellMobile = styled(StyledTableCell)(() => ({
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action ? theme.palette.action.hover : '#f5f5f5',
+    backgroundColor: theme.palette.secondary.main,
   },
   '&:last-child td, &:last-child th': {
     border: 0,
@@ -41,7 +41,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const StyledButton = styled(Button)(({theme}) => ({
   width: '100%',
   backgroundColor: theme.palette.error.light,
-  color: '#ffffff',
+  color: theme.palette.secondary.dark,
   '&:hover': {
     backgroundColor: theme.palette.error.dark,
   },
