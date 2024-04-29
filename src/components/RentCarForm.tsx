@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import InputMask from 'react-input-mask';
 import { RentCar, initialFormState, FieldErrors } from '../interfaces';
 import { TextField, Button, Box, useTheme } from '@mui/material';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 interface RentCarFormProps {
     form: RentCar;
@@ -18,20 +21,20 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleDateChange = (name: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm({ ...form, [name]: dayjs(e.target.value) });
+    const handleDateChange = (name: string) => (date: Dayjs | null) => {
+        if (date) {
+            setForm(prevForm => ({ ...prevForm, [name]: date }));
+        }
     };
 
     const handleReset = () => {
         setForm(initialFormState);
     };
 
-    const [startRentDate, setStartRentDate] = useState(new Date().toISOString().split('T')[0]);
-
-    const handleStartRentDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const nextDay = dayjs(e.target.value).add(1, 'day').format('YYYY-MM-DD');
-        setStartRentDate(nextDay);
-        handleDateChange('startRentDate')(e);
+    const handleStartRentDateChange = (date: Dayjs | null) => {
+        if (date) {
+            setForm(prevForm => ({ ...prevForm, startRentDate: date }));
+        }
     };
 
     const [fieldErrors, setFieldErrors] = useState({
@@ -94,7 +97,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         borderColor: (fieldErrors: FieldErrors, fieldName: keyof FieldErrors) => fieldErrors[fieldName] ? theme.palette.error.main : theme.palette.primary.main,
         marginBottom: '10px',
         fontSize: '16px',
-        color: '#333',
+        color: theme.palette.primary.dark,
         fontFamily: theme.typography.fontFamily,
     }
 
@@ -105,8 +108,14 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         borderColor: (fieldErrors: FieldErrors, fieldName: keyof FieldErrors) => fieldErrors[fieldName] ? theme.palette.error.main : theme.palette.primary.main,
         marginBottom: '10px',
         fontSize: '16px',
-        color: '#333',
+        color: theme.palette.primary.dark,
         fontFamily: theme.typography.fontFamily,
+    }
+
+    const DateAndTimeStyle = {
+        width: '90%', 
+        padding: '10px',
+        marginBottom: '10px',
     }
 
     const SubmitButtonStyle = {
@@ -227,35 +236,27 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                     borderColor: fieldErrors.placeOfIssue ? theme.palette.error.main : theme.palette.primary.main,
                 }}
             />
-            <TextField 
-                type="date" 
-                label="Start Rent Date"
-                id="outlined-password-input"
-                className="startRentDate" 
-                name="startRentDate" 
-                value={form.startRentDate.format('YYYY-MM-DD')} 
-                onChange={handleStartRentDateChange} 
-                inputProps={{ min: new Date().toISOString().split('T')[0] }}
-                required
-                sx={{
-                    ...TextFieldStyle,
-                    borderColor: theme.palette.primary.main,
-                }}
-            />
-            <TextField 
-                type="date" 
-                label="Finish Rent Date"
-                className="finishRentDate" 
-                name="finishRentDate" 
-                value={form.finishRentDate.format('YYYY-MM-DD')} 
-                onChange={handleDateChange('finishRentDate')}
-                required 
-                inputProps={{ min: startRentDate }}
-                sx={{
-                    ...TextFieldStyle,
-                    borderColor: theme.palette.primary.main,
-                }}
-            />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                    label="Start Rent Date"
+                    name="startRentDate"
+                    value={form.startRentDate}
+                    onChange={handleStartRentDateChange}
+                    format="YYYY-MM-DD hh:mm A"
+                    minDateTime={dayjs()}
+                    sx={DateAndTimeStyle}
+                />
+
+                <DateTimePicker
+                    label="Finish Rent Date"
+                    name="finishRentDate"
+                    value={form.finishRentDate}
+                    onChange={handleDateChange('finishRentDate')}
+                    format="YYYY-MM-DD hh:mm A"
+                    minDateTime={form.startRentDate ? dayjs(form.startRentDate) : dayjs()}
+                    sx={DateAndTimeStyle}
+                />
+            </LocalizationProvider>
             <TextField
                 className="comments"
                 label="Comments"
