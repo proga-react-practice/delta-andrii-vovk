@@ -67,7 +67,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         borderRadius: '10px',
         boxShadow: '0 0 10px rgba(0,0,0,0.20)',
         [theme.breakpoints.up('lg')]: {
-            marginLeft: '250px',
+            marginLeft: '100px',
         },
         [theme.breakpoints.between('md', 'lg')]: {
             marginLeft: '120px',
