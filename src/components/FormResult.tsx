@@ -8,19 +8,6 @@ interface FormResultsProps {
   onDelete: () => void;
 }
 
-// const StyledTable = styled(Table)(() => ({
-//   display: 'flex',
-//   flexDirection: 'column',
-//   justifyContent: 'space-between',
-//   marginLeft: 150,
-//   marginBottom: 20,
-//   textAlign: 'center',
-//   backgroundColor: '#f8f9fa',
-//   padding: 20,
-//   borderRadius: 10,
-//   boxShadow: '0 0 10px rgba(0,0,0,0.15)',
-// }));
-
 const FormResultStyle = {
   display: 'flex',
   flexDirection: 'column',
