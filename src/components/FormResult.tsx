@@ -17,8 +17,8 @@ const StyledTableCell = styled(TableCell)(({theme}) => ({
   borderBottom: '1px solid #ddd',
   
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.secondary.light,
-    color: theme.palette.secondary.dark,
+    backgroundColor: theme.palette.secondary.dark,
+    color: theme.palette.secondary.light,
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -41,7 +41,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const StyledButton = styled(Button)(({theme}) => ({
   width: '100%',
   backgroundColor: theme.palette.error.light,
-  color: theme.palette.secondary.dark,
+  color: theme.palette.secondary.light,
   '&:hover': {
     backgroundColor: theme.palette.error.dark,
   },
