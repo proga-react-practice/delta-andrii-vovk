@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import InputMask from 'react-input-mask';
-import styles from '../App.module.css'; 
-import { RentCar, initialFormState } from '../interfaces';
+import { RentCar, initialFormState, FieldErrors } from '../interfaces';
+import { TextField, Button, Box, useTheme } from '@mui/material';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 interface RentCarFormProps {
     form: RentCar;
@@ -12,117 +15,293 @@ interface RentCarFormProps {
 
 const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => {
 
+    const theme = useTheme();
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleDateChange = (name: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm({ ...form, [name]: dayjs(e.target.value) });
+    const handleDateChange = (name: string) => (date: Dayjs | null) => {
+        if (date) {
+            setForm(prevForm => ({ ...prevForm, [name]: date }));
+        }
     };
 
     const handleReset = () => {
         setForm(initialFormState);
     };
 
-    const [startRentDate, setStartRentDate] = useState(new Date().toISOString().split('T')[0]);
-
-    const handleStartRentDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const nextDay = dayjs(e.target.value).add(1, 'day').format('YYYY-MM-DD');
-        setStartRentDate(nextDay);
-        handleDateChange('startRentDate')(e);
+    const handleStartRentDateChange = (date: Dayjs | null) => {
+        if (date) {
+            setForm(prevForm => ({ ...prevForm, startRentDate: date }));
+        }
     };
 
+    const [fieldErrors, setFieldErrors] = useState({
+        firstName: false,
+        lastName: false,
+        phoneNumber: false,
+        email: false,
+        placeOfIssue: false,
+    });
+    
+    const handleFieldChange = (name: string, pattern: RegExp) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setFieldErrors({
+            ...fieldErrors,
+            [name]: !value.match(pattern),
+        });
+        handleChange(e);
+    };
+
+    const FormStyle = {
+        minWidth: '250px',
+        maxWidth: '300px',
+        marginLeft: '100px',
+        float: 'left',
+        display: 'flex',
+        flexDirection: 'column',
+        marginTop: '70px',
+        backgroundColor: theme.palette.background.default,
+        padding: '20px',
+        borderRadius: '10px',
+        boxShadow: '0 0 10px rgba(0,0,0,0.20)',
+        [theme.breakpoints.up('lg')]: {
+            marginLeft: '100px',
+        },
+        [theme.breakpoints.between('md', 'lg')]: {
+            marginLeft: '120px',
+        },
+        [theme.breakpoints.between('sm', 'md')]: {
+            marginLeft: '168px',
+        },
+        [theme.breakpoints.down('sm')]: {
+            marginLeft: '40px',
+        },
+        [theme.breakpoints.down('xs')]: {
+            marginLeft: '50px',
+            maxWidth: '250px',
+        },
+    }
+
+    const FullNameStyle = {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+    }
+
+    const FirstAndLastNameStyle = {
+        width: 'calc(50% - 5px)',
+        padding: '10px',
+        borderRadius: '5px',
+        borderColor: (fieldErrors: FieldErrors, fieldName: keyof FieldErrors) => fieldErrors[fieldName] ? theme.palette.error.main : theme.palette.primary.main,
+        marginBottom: '10px',
+        fontSize: '16px',
+        color: theme.palette.primary.dark,
+        fontFamily: theme.typography.fontFamily,
+    }
+    
+    const TextFieldStyle = {
+        width: '100%',
+        padding: '10px',
+        borderRadius: '5px',
+        borderColor: (fieldErrors: FieldErrors, fieldName: keyof FieldErrors) => fieldErrors[fieldName] ? theme.palette.error.main : theme.palette.primary.main,
+        marginBottom: '10px',
+        fontSize: '16px',
+        color: theme.palette.primary.dark,
+        fontFamily: theme.typography.fontFamily,
+    }
+
+    const DateAndTimeStyle = {
+        width: '100%', 
+        padding: '10px',
+        marginBottom: '10px',
+        boxSizing: 'border-box',
+    }
+
+    const BoxStyle = {
+        width: '100%',
+        boxSizing: 'border-box',
+        display: 'flex',
+        justifyContent: 'space-around'
+    }
+
+    const SubmitButtonStyle = {
+        width: '44%',
+        padding: '5px',
+        marginTop: '10px',
+        border: 'none',
+        borderRadius: '5px',
+        color: theme.palette.secondary.light,
+        backgroundColor: theme.palette.info.light,
+        marginRight: '10%', 
+        '&:hover': {
+            backgroundColor: theme.palette.info.dark,
+        },
+    }
+
+    const ResetButtonStyle = {
+        width: '44%',
+        padding: '5px',
+        marginTop: '10px',
+        border: 'none',
+        borderRadius: '5px',
+        color: '#ffffff',
+        backgroundColor: theme.palette.error.light,
+        '&:hover': {
+            backgroundColor: theme.palette.error.dark,
+        },
+    }
+
     return (
-        <form onSubmit={(e) => { onSubmit(e); }} className={styles.rentCar}>
-            <div id={styles.fullName}>
-                <input 
-                    className={styles.firstName} 
+        <Box 
+            component="form" 
+            onSubmit={(e) => { onSubmit(e); }} 
+            sx={FormStyle}
+        >
+            <Box 
+                id="fullName" 
+                sx={FullNameStyle}
+            >
+                <TextField 
+                    error={fieldErrors.firstName}
+                    className="firstName" 
+                    label="First Name"
                     name="firstName" 
                     value={form.firstName} 
-                    onChange={handleChange} 
+                    onChange={handleFieldChange('firstName', /^[A-Z][a-z]*$/)} 
                     placeholder="First Name" 
                     required
-                    pattern="^[A-Z][a-z]*$"
+                    inputProps = {{ pattern: "^[A-Z][a-z]*$" }}
                     title="First name must start with a capital letter and contain only letters."
+                    sx={{
+                        ...FirstAndLastNameStyle,
+                        borderColor: fieldErrors.firstName ? theme.palette.error.main : theme.palette.primary.main,
+                    }}
                 />
-                <input 
-                    className={styles.lastName} 
+                <TextField 
+                    error={fieldErrors.lastName}
+                    className="lastName" 
+                    label="Last Name"
                     name="lastName" 
                     value={form.lastName} 
-                    onChange={handleChange} 
+                    onChange={handleFieldChange('lastName', /^[A-Z][a-z]*$/)} 
                     placeholder="Last Name" 
                     required
-                    pattern="^[A-Z][a-z]*$"
+                    inputProps = {{ pattern: "^[A-Z][a-z]*$" }}
                     title="Last name must start with a capital letter and contain only letters."
+                    sx={{
+                        ...FirstAndLastNameStyle,
+                        borderColor: fieldErrors.lastName ? theme.palette.error.main : theme.palette.primary.main,
+                    }}
                 />
-            </div>
-            <InputMask 
+            </Box>
+            <InputMask
                 mask="+38(099) 999 9999"
-                className={styles.phoneNumber} 
-                name="phoneNumber" 
-                value={form.phoneNumber} 
-                onChange={handleChange} 
-                placeholder="Phone Number"
-                required 
-            />
-            <input 
-                className={styles.email} 
+                value={form.phoneNumber}
+                onChange={handleChange}
+            >
+                <TextField
+                    name="phoneNumber"
+                    label="Phone Number"
+                    placeholder="+38(0__) ___ ____"
+                    required
+                    title="Please enter a valid phone number in the format: +38(0__) ___ ____"
+                    sx={{
+                        ...TextFieldStyle,
+                        borderColor: fieldErrors.phoneNumber ? theme.palette.error.main : theme.palette.primary.main,
+                        boxSizing: 'border-box',
+                    }}
+                />
+            </InputMask>
+            <TextField 
+                error={fieldErrors.email}
+                className="email"
+                label="Email" 
                 name="email" 
                 value={form.email} 
-                onChange={handleChange} 
+                onChange={handleFieldChange('email', /.+@.+/)}  
                 placeholder="Email" 
                 required
-                pattern=".+@.+"
+                inputProps={{ pattern: ".+@.+" }}
                 title="Email must contain '@'."
+                sx={{
+                    ...TextFieldStyle,
+                    borderColor: fieldErrors.email ? theme.palette.error.main : theme.palette.primary.main,
+                    boxSizing: 'border-box',
+                }}
             />
-            <input 
-                className={styles.placeOfIssue} 
+            <TextField 
+                error={fieldErrors.placeOfIssue}
+                className="placeOfIssue"
+                label="Place of Issue"   
                 name="placeOfIssue" 
                 value={form.placeOfIssue} 
-                onChange={handleChange} 
+                onChange={handleFieldChange('placeOfIssue', /^[A-Z][a-z]*$/)}  
                 placeholder="Place of Issue" 
                 required
-                pattern="^[A-Z][a-z]*$"
+                inputProps={{ pattern: "^[A-Z][a-z]*$" }}
+                sx={{
+                    ...TextFieldStyle,
+                    borderColor: fieldErrors.placeOfIssue ? theme.palette.error.main : theme.palette.primary.main,
+                    boxSizing: 'border-box',
+                }}
             />
-            <input 
-                type="date" 
-                className={styles.startRentDate} 
-                name="startRentDate" 
-                value={form.startRentDate.format('YYYY-MM-DD')} 
-                onChange={handleStartRentDateChange} 
-                min={new Date().toISOString().split('T')[0]}
-                required
-            />
-            <input 
-                type="date" 
-                className={styles.finishRentDate} 
-                name="finishRentDate" 
-                value={form.finishRentDate.format('YYYY-MM-DD')} 
-                onChange={handleDateChange('finishRentDate')}
-                min={startRentDate}
-                required 
-            />
-            <textarea
-                className={styles.comments}
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                    label="Start Rent Date"
+                    name="startRentDate"
+                    value={form.startRentDate}
+                    onChange={handleStartRentDateChange}
+                    format="YYYY-MM-DD hh:mm A"
+                    minDateTime={dayjs()}
+                    sx={DateAndTimeStyle}
+                />
+
+                <DateTimePicker
+                    label="Finish Rent Date"
+                    name="finishRentDate"
+                    value={form.finishRentDate}
+                    onChange={handleDateChange('finishRentDate')}
+                    format="YYYY-MM-DD hh:mm A"
+                    minDateTime={form.startRentDate ? dayjs(form.startRentDate) : dayjs()}
+                    sx={DateAndTimeStyle}
+                />
+            </LocalizationProvider>
+            <TextField
+                className="comments"
+                label="Comments"
                 name="comments" 
                 value={form.comments} 
                 onChange={handleChange} 
                 placeholder="Comments" 
+                sx={{
+                    ...TextFieldStyle,
+                    borderColor: theme.palette.primary.main,
+                    boxSizing: 'border-box',
+                }}
             />
-            <div className={styles.buttons}>
-                <button 
-                    className={styles.submit} 
-                    type="submit">
-                        Submit
-                </button>
-                <button 
-                    className={styles.reset} 
+            <Box 
+                className="buttons"
+                sx={BoxStyle}
+            >
+                <Button 
+                    className="submit" 
+                    type="submit"
+                    sx={SubmitButtonStyle}
+                >
+                    Submit
+                </Button>
+                <Button 
+                    className="reset" 
                     onClick={handleReset} 
-                    type="reset">
-                        Reset
-                </button>
-            </div>
-        </form>
+                    type="reset"
+                    sx={ResetButtonStyle}
+                >
+                    Reset
+                </Button>
+            </Box>
+        </Box>
     );
 };
 
