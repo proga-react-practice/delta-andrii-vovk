@@ -85,7 +85,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
     }
 
     const FullNameStyle = {
-        width: '97%',
+        width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
     }
@@ -100,9 +100,9 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         color: theme.palette.primary.dark,
         fontFamily: theme.typography.fontFamily,
     }
-
+    
     const TextFieldStyle = {
-        width: '90%',
+        width: '100%',
         padding: '10px',
         borderRadius: '5px',
         borderColor: (fieldErrors: FieldErrors, fieldName: keyof FieldErrors) => fieldErrors[fieldName] ? theme.palette.error.main : theme.palette.primary.main,
@@ -113,9 +113,17 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
     }
 
     const DateAndTimeStyle = {
-        width: '90%', 
+        width: '100%', 
         padding: '10px',
         marginBottom: '10px',
+        boxSizing: 'border-box',
+    }
+
+    const BoxStyle = {
+        width: '100%',
+        boxSizing: 'border-box',
+        display: 'flex',
+        justifyContent: 'space-around'
     }
 
     const SubmitButtonStyle = {
@@ -124,7 +132,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         marginTop: '10px',
         border: 'none',
         borderRadius: '5px',
-        color: theme.palette.secondary.dark,
+        color: theme.palette.secondary.light,
         backgroundColor: theme.palette.info.light,
         marginRight: '10%', 
         '&:hover': {
@@ -202,6 +210,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                     sx={{
                         ...TextFieldStyle,
                         borderColor: fieldErrors.phoneNumber ? theme.palette.error.main : theme.palette.primary.main,
+                        boxSizing: 'border-box',
                     }}
                 />
             </InputMask>
@@ -219,6 +228,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 sx={{
                     ...TextFieldStyle,
                     borderColor: fieldErrors.email ? theme.palette.error.main : theme.palette.primary.main,
+                    boxSizing: 'border-box',
                 }}
             />
             <TextField 
@@ -234,6 +244,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 sx={{
                     ...TextFieldStyle,
                     borderColor: fieldErrors.placeOfIssue ? theme.palette.error.main : theme.palette.primary.main,
+                    boxSizing: 'border-box',
                 }}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -267,13 +278,12 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 sx={{
                     ...TextFieldStyle,
                     borderColor: theme.palette.primary.main,
+                    boxSizing: 'border-box',
                 }}
             />
             <Box 
                 className="buttons"
-                sx={{
-                    width: '100%',
-                }}
+                sx={BoxStyle}
             >
                 <Button 
                     className="submit" 
