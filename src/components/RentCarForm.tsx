@@ -1,17 +1,32 @@
 import React, { useState } from "react";
 import dayjs, { Dayjs } from 'dayjs';
 import InputMask from 'react-input-mask';
-import { RentCar, initialFormState, FieldErrors } from '../interfaces';
+import { RentCar, initialFormState } from '../interfaces';
 import { TextField, Button, Box, useTheme } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { styled } from '@mui/system';
 
 interface RentCarFormProps {
     form: RentCar;
     setForm: React.Dispatch<React.SetStateAction<RentCar>>;
     onSubmit: (e: React.FormEvent) => void;
 }
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+    width: '100%',
+    padding: '10px',
+    borderRadius: '5px',
+    borderColor: theme.palette.primary.main,
+    marginBottom: '10px',
+    fontSize: '16px',
+    color: theme.palette.primary.dark,
+    boxSizing: 'border-box',
+    '&.Mui-error': {
+        borderColor: theme.palette.error.main,
+    },
+}));
 
 const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => {
 
@@ -52,13 +67,11 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
             [name]: !value.match(pattern),
         });
         handleChange(e);
-    };
+    }; 
 
     const FormStyle = {
         minWidth: '250px',
         maxWidth: '300px',
-        marginLeft: '100px',
-        float: 'left',
         display: 'flex',
         flexDirection: 'column',
         marginTop: '70px',
@@ -66,22 +79,6 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         padding: '20px',
         borderRadius: '10px',
         boxShadow: '0 0 10px rgba(0,0,0,0.20)',
-        [theme.breakpoints.up('lg')]: {
-            marginLeft: '100px',
-        },
-        [theme.breakpoints.between('md', 'lg')]: {
-            marginLeft: '120px',
-        },
-        [theme.breakpoints.between('sm', 'md')]: {
-            marginLeft: '168px',
-        },
-        [theme.breakpoints.down('sm')]: {
-            marginLeft: '40px',
-        },
-        [theme.breakpoints.down('xs')]: {
-            marginLeft: '50px',
-            maxWidth: '250px',
-        },
     }
 
     const FullNameStyle = {
@@ -89,29 +86,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         display: 'flex',
         justifyContent: 'space-between',
     }
-
-    const FirstAndLastNameStyle = {
-        width: 'calc(50% - 5px)',
-        padding: '10px',
-        borderRadius: '5px',
-        borderColor: (fieldErrors: FieldErrors, fieldName: keyof FieldErrors) => fieldErrors[fieldName] ? theme.palette.error.main : theme.palette.primary.main,
-        marginBottom: '10px',
-        fontSize: '16px',
-        color: theme.palette.primary.dark,
-        fontFamily: theme.typography.fontFamily,
-    }
     
-    const TextFieldStyle = {
-        width: '100%',
-        padding: '10px',
-        borderRadius: '5px',
-        borderColor: (fieldErrors: FieldErrors, fieldName: keyof FieldErrors) => fieldErrors[fieldName] ? theme.palette.error.main : theme.palette.primary.main,
-        marginBottom: '10px',
-        fontSize: '16px',
-        color: theme.palette.primary.dark,
-        fontFamily: theme.typography.fontFamily,
-    }
-
     const DateAndTimeStyle = {
         width: '100%', 
         padding: '10px',
@@ -146,7 +121,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         marginTop: '10px',
         border: 'none',
         borderRadius: '5px',
-        color: '#ffffff',
+        color: theme.palette.secondary.light,
         backgroundColor: theme.palette.error.light,
         '&:hover': {
             backgroundColor: theme.palette.error.dark,
@@ -163,7 +138,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 id="fullName" 
                 sx={FullNameStyle}
             >
-                <TextField 
+                <StyledTextField 
                     error={fieldErrors.firstName}
                     className="firstName" 
                     label="First Name"
@@ -174,12 +149,8 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                     required
                     inputProps = {{ pattern: "^[A-Z][a-z]*$" }}
                     title="First name must start with a capital letter and contain only letters."
-                    sx={{
-                        ...FirstAndLastNameStyle,
-                        borderColor: fieldErrors.firstName ? theme.palette.error.main : theme.palette.primary.main,
-                    }}
                 />
-                <TextField 
+                <StyledTextField 
                     error={fieldErrors.lastName}
                     className="lastName" 
                     label="Last Name"
@@ -190,10 +161,6 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                     required
                     inputProps = {{ pattern: "^[A-Z][a-z]*$" }}
                     title="Last name must start with a capital letter and contain only letters."
-                    sx={{
-                        ...FirstAndLastNameStyle,
-                        borderColor: fieldErrors.lastName ? theme.palette.error.main : theme.palette.primary.main,
-                    }}
                 />
             </Box>
             <InputMask
@@ -201,20 +168,15 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 value={form.phoneNumber}
                 onChange={handleChange}
             >
-                <TextField
+                <StyledTextField
                     name="phoneNumber"
                     label="Phone Number"
                     placeholder="+38(0__) ___ ____"
                     required
                     title="Please enter a valid phone number in the format: +38(0__) ___ ____"
-                    sx={{
-                        ...TextFieldStyle,
-                        borderColor: fieldErrors.phoneNumber ? theme.palette.error.main : theme.palette.primary.main,
-                        boxSizing: 'border-box',
-                    }}
                 />
             </InputMask>
-            <TextField 
+            <StyledTextField 
                 error={fieldErrors.email}
                 className="email"
                 label="Email" 
@@ -225,13 +187,8 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 required
                 inputProps={{ pattern: ".+@.+" }}
                 title="Email must contain '@'."
-                sx={{
-                    ...TextFieldStyle,
-                    borderColor: fieldErrors.email ? theme.palette.error.main : theme.palette.primary.main,
-                    boxSizing: 'border-box',
-                }}
             />
-            <TextField 
+            <StyledTextField 
                 error={fieldErrors.placeOfIssue}
                 className="placeOfIssue"
                 label="Place of Issue"   
@@ -241,11 +198,6 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 placeholder="Place of Issue" 
                 required
                 inputProps={{ pattern: "^[A-Z][a-z]*$" }}
-                sx={{
-                    ...TextFieldStyle,
-                    borderColor: fieldErrors.placeOfIssue ? theme.palette.error.main : theme.palette.primary.main,
-                    boxSizing: 'border-box',
-                }}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
@@ -254,7 +206,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                     value={form.startRentDate}
                     onChange={handleStartRentDateChange}
                     format="YYYY-MM-DD hh:mm A"
-                    minDateTime={dayjs()}
+                    minDateTime={dayjs().subtract(1, 'minutes')}
                     sx={DateAndTimeStyle}
                 />
 
@@ -268,18 +220,13 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                     sx={DateAndTimeStyle}
                 />
             </LocalizationProvider>
-            <TextField
+            <StyledTextField
                 className="comments"
                 label="Comments"
                 name="comments" 
                 value={form.comments} 
                 onChange={handleChange} 
                 placeholder="Comments" 
-                sx={{
-                    ...TextFieldStyle,
-                    borderColor: theme.palette.primary.main,
-                    boxSizing: 'border-box',
-                }}
             />
             <Box 
                 className="buttons"
