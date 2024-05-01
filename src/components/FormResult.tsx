@@ -54,7 +54,6 @@ export const FormResults: React.FC<FormResultsProps> = ({ form, onDelete }) => {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    marginLeft: '140px',
     marginBottom: '20px',
     marginTop: '50px',
     backgroundColor: theme.palette.background.default,
@@ -104,24 +103,11 @@ export const FormResultsMobile: React.FC<FormResultsProps> = ({ form, onDelete }
   const MobileStyle = {
     display: 'flex',
     maxWidth: '400px',
-    marginLeft: '140px',
     marginBottom: '20px',
     marginTop: '50px',
     backgroundColor: theme.palette.background.default,
     borderRadius: '5px',
     boxShadow: '0 0 10px rgba(0,0,0,0.25)',
-  
-    '@media (max-width: 1420px)': {
-        marginTop: '70px',
-    },
-    '@media (max-width: 450px)': {
-        marginLeft: '35px',
-        maxWidth: '350px',
-    },
-    '@media (max-width: 380px)': {
-        marginLeft: '35px',
-        maxWidth: '300px',
-    },
   }  
 
   return (
