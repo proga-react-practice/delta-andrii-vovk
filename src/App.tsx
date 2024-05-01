@@ -26,14 +26,22 @@ function App() {
 
   const AppStyle = {
     display: 'flex',
-    width: '1350px',
+    width: '100%',
     flexDirection: {xs: 'column', md: 'row'},
+    justifyContent: 'center',
+  }
+
+  const RentCar = {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 
   return (
     <ThemeProvider theme={theme}>
       <Box sx={ AppStyle }>
-        <Box>
+        <Box sx={ RentCar }>
           <RentCarForm form={form} setForm={setForm} onSubmit={handleSubmit} />
         </Box>
         <Box>
