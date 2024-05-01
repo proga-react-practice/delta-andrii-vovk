@@ -28,11 +28,11 @@ function App() {
     display: 'flex',
     width: '100%',
     flexDirection: {xs: 'column', md: 'row'},
-    justifyContent: 'center',
+    justifyContent: {xs: 'center', md: 'space-between'},
   }
 
   const RentCar = {
-    width: '100%',
+    width: {xs: '100%', md: '50%'},
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
