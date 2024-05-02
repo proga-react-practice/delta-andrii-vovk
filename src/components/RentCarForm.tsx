@@ -2,31 +2,17 @@ import React, { useState } from "react";
 import dayjs, { Dayjs } from 'dayjs';
 import InputMask from 'react-input-mask';
 import { RentCar, initialFormState } from '../interfaces';
-import { TextField, Button, Box, useTheme } from '@mui/material';
+import { Button, Box, useTheme } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { styled } from '@mui/system';
+import { StyledTextField } from './styledComponents/StyledComponent'
 
 interface RentCarFormProps {
     form: RentCar;
     setForm: React.Dispatch<React.SetStateAction<RentCar>>;
     onSubmit: (e: React.FormEvent) => void;
 }
-
-const StyledTextField = styled(TextField)(({ theme }) => ({
-    width: '100%',
-    padding: '10px',
-    borderRadius: '5px',
-    borderColor: theme.palette.primary.main,
-    marginBottom: '10px',
-    fontSize: '16px',
-    color: theme.palette.primary.dark,
-    boxSizing: 'border-box',
-    '&.Mui-error': {
-        borderColor: theme.palette.error.main,
-    },
-}));
 
 const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => {
 
