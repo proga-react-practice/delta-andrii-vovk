@@ -13,7 +13,8 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
   
     const MobileStyle = {
       display: 'flex',
-      maxWidth: '85%',
+      maxWidth: 320,
+      minWidth: 260,
       marginBottom: '20px',
       marginTop: '50px',
       backgroundColor: theme.palette.background.default,
