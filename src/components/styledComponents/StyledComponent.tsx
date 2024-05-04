@@ -45,7 +45,6 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
   padding: '10px',
   borderRadius: '5px',
   borderColor: theme.palette.primary.main,
-  marginBottom: '10px',
   fontSize: '16px',
   color: theme.palette.primary.dark,
   boxSizing: 'border-box',
