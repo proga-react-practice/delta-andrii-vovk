@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import dayjs, { Dayjs } from 'dayjs';
 import InputMask from 'react-input-mask';
 import { RentCar, initialFormState } from '../interfaces';
-import { Button, Box, useTheme } from '@mui/material';
+import { Button, Box, useTheme, FormHelperText } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { StyledTextField } from './styledComponents/StyledComponent'
+import { DateTimeValidationError } from '@mui/x-date-pickers/models';
 
 interface RentCarFormProps {
     form: RentCar;
@@ -16,6 +17,8 @@ interface RentCarFormProps {
 
 const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => {
 
+    const [error, setError] = React.useState<DateTimeValidationError | null>(null);
+
     const theme = useTheme();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -24,7 +27,12 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
 
     const handleDateChange = (name: string) => (date: Dayjs | null) => {
         if (date) {
-            setForm(prevForm => ({ ...prevForm, [name]: date }));
+            if (name === 'finishRentDate' && date.isBefore(dayjs(form.startRentDate).add(5, 'hours'))) {
+                setFieldErrors(prevErrors => ({ ...prevErrors, finishRentDate: true }));
+            } else {
+                setFieldErrors(prevErrors => ({ ...prevErrors, finishRentDate: false }));
+                setForm(prevForm => ({ ...prevForm, [name]: date }));
+            }
         }
     };
 
@@ -38,12 +46,39 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         }
     };
 
+    const handlePhoneNumberBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        const phoneNumberPattern = /^\+38\(\d{3}\) \d{3} \d{4}$/;
+        setFieldErrors({
+            ...fieldErrors,
+            phoneNumber: !value.match(phoneNumberPattern),
+        });
+    };
+
+    const errorMessage = React.useMemo(() => {
+        switch (error) {
+          case 'maxDate':
+          case 'minDate': {
+            return 'You can rent for at least 5 hours.';
+          }
+    
+          case 'invalidDate': {
+            return 'Your date is not valid';
+          }
+    
+          default: {
+            return '';
+          }
+        }
+      }, [error]);
+
     const [fieldErrors, setFieldErrors] = useState({
         firstName: false,
         lastName: false,
         phoneNumber: false,
         email: false,
         placeOfIssue: false,
+        finishRentDate: false,
     });
     
     const handleFieldChange = (name: string, pattern: RegExp) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,6 +106,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
+        flexDirection: 'row',
     }
     
     const DateAndTimeStyle = {
@@ -120,50 +156,61 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
             onSubmit={(e) => { onSubmit(e); }} 
             sx={FormStyle}
         >
-            <Box 
-                id="fullName" 
-                sx={FullNameStyle}
-            >
-                <StyledTextField 
-                    error={fieldErrors.firstName}
-                    className="firstName" 
-                    label="First Name"
-                    name="firstName" 
-                    value={form.firstName} 
-                    onChange={handleFieldChange('firstName', /^[A-Z][a-z]*$/)} 
-                    placeholder="First Name" 
-                    required
-                    inputProps = {{ pattern: "^[A-Z][a-z]*$" }}
-                    title="First name must start with a capital letter and contain only letters."
-                />
-                <StyledTextField 
-                    error={fieldErrors.lastName}
-                    className="lastName" 
-                    label="Last Name"
-                    name="lastName" 
-                    value={form.lastName} 
-                    onChange={handleFieldChange('lastName', /^[A-Z][a-z]*$/)} 
-                    placeholder="Last Name" 
-                    required
-                    inputProps = {{ pattern: "^[A-Z][a-z]*$" }}
-                    title="Last name must start with a capital letter and contain only letters."
-                />
+            <Box>
+                <Box
+                    id="fullName" 
+                    sx={FullNameStyle}
+                >
+                    <StyledTextField 
+                        error={fieldErrors.firstName}
+                        className="firstName" 
+                        label="First Name"
+                        name="firstName" 
+                        value={form.firstName} 
+                        onChange={handleFieldChange('firstName', /^[A-Z][a-z]*$/)} 
+                        placeholder="First Name" 
+                        required
+                        inputProps = {{ pattern: "^[A-Z][a-z]*$" }}
+                    />
+                    <StyledTextField 
+                        error={fieldErrors.lastName}
+                        className="lastName" 
+                        label="Last Name"
+                        name="lastName" 
+                        value={form.lastName} 
+                        onChange={handleFieldChange('lastName', /^[A-Z][a-z]*$/)} 
+                        placeholder="Last Name" 
+                        required
+                        inputProps = {{ pattern: "^[A-Z][a-z]*$" }}
+                    />
+                </Box>
+                    {(fieldErrors.firstName || fieldErrors.lastName) && (
+                        <FormHelperText error>
+                            {fieldErrors.firstName ? "First name must start with a capital letter and contain only letters." : ""}
+                            {fieldErrors.firstName && fieldErrors.lastName && <br />}
+                            {fieldErrors.lastName ? "Last name must start with a capital letter and contain only letters." : ""}
+                        </FormHelperText>
+                    )}
             </Box>
             <InputMask
                 mask="+38(099) 999 9999"
                 value={form.phoneNumber}
                 onChange={handleChange}
+                onBlur={handlePhoneNumberBlur}
             >
                 <StyledTextField
                     name="phoneNumber"
+                    error={fieldErrors.phoneNumber}
+                    helperText={fieldErrors.phoneNumber ? "Please enter a valid phone number in the format: +38(0__) ___ ____" : ""}
                     label="Phone Number"
                     placeholder="+38(0__) ___ ____"
                     required
-                    title="Please enter a valid phone number in the format: +38(0__) ___ ____"
+                    inputProps = {{ pattern: "\\+38\\(0[0-9]{2}\\) [0-9]{3} [0-9]{4}" }}
                 />
             </InputMask>
             <StyledTextField 
                 error={fieldErrors.email}
+                helperText={fieldErrors.email ? "Email must contain '@'." : ''}
                 className="email"
                 label="Email" 
                 name="email" 
@@ -172,10 +219,10 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                 placeholder="Email" 
                 required
                 inputProps={{ pattern: ".+@.+" }}
-                title="Email must contain '@'."
             />
             <StyledTextField 
                 error={fieldErrors.placeOfIssue}
+                helperText={fieldErrors.placeOfIssue ? "Place must start with a capital letter and contain only letters." : ""}
                 className="placeOfIssue"
                 label="Place of Issue"   
                 name="placeOfIssue" 
@@ -202,7 +249,13 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                     value={form.finishRentDate}
                     onChange={handleDateChange('finishRentDate')}
                     format="YYYY-MM-DD hh:mm A"
-                    minDateTime={form.startRentDate ? dayjs(form.startRentDate) : dayjs()}
+                    minDateTime={form.startRentDate ? dayjs(form.startRentDate).add(5, 'h') : dayjs()}
+                    onError={(newError) => setError(newError)}
+                    slotProps={{
+                        textField: {
+                          helperText: errorMessage,
+                        },
+                      }}
                     sx={DateAndTimeStyle}
                 />
             </LocalizationProvider>
