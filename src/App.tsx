@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 function App() {
   const [form, setForm] = useState<RentCar>(initialFormState);
   const [submittedForms, setSubmittedForms] = useState<RentCar[]>([]);
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
