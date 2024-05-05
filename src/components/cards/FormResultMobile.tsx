@@ -1,7 +1,8 @@
 import React from 'react';
-import { RentCar } from '../interfaces';
-import { StyledTableCellMobile, StyledTableRow, StyledButton } from './styledComponents/StyledComponent'
-import { Table, TableBody, TableContainer, Paper, useTheme } from '@mui/material';
+import { RentCar } from '../../interfaces';
+import { StyledTableCellMobile, StyledTableRow, StyledButton } from '../styledComponents/StyledComponent'
+import { createTransform } from '../animations/animation' 
+import { Table, TableBody, TableContainer, useTheme } from '@mui/material';
 
 interface FormResultsMobileProps {
   form: RentCar;
@@ -10,6 +11,7 @@ interface FormResultsMobileProps {
 
 export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDelete }) => {
     const theme = useTheme()
+    const Transform = createTransform(theme)
   
     const MobileStyle = {
       display: 'flex',
@@ -23,11 +25,9 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
     }  
   
     return (
-      <TableContainer component={Paper} 
-      sx={ MobileStyle }
-      >
+      <TableContainer sx={ MobileStyle }>
           <Table aria-label="customize table">
-              <TableBody>
+              <TableBody sx={Transform}>
                   <StyledTableRow>
                       <StyledTableCellMobile>First Name</StyledTableCellMobile>
                       <StyledTableCellMobile>{form.firstName}</StyledTableCellMobile>
