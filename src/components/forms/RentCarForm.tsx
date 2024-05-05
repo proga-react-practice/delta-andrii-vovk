@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import dayjs, { Dayjs } from 'dayjs';
 import InputMask from 'react-input-mask';
-import { RentCar, initialFormState } from '../interfaces';
+import { RentCar, initialFormState } from '../../interfaces';
 import { Button, Box, useTheme, FormHelperText } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { StyledTextField } from './styledComponents/StyledComponent'
+import { StyledTextField } from '../styledComponents/StyledComponent'
 import { DateTimeValidationError } from '@mui/x-date-pickers/models';
+import { createTransform } from '../animations/animation' 
 
 interface RentCarFormProps {
     form: RentCar;
@@ -20,6 +21,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
     const [error, setError] = React.useState<DateTimeValidationError | null>(null);
 
     const theme = useTheme();
+    const Transform = createTransform(theme)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -91,7 +93,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
     }; 
 
     const FormStyle = {
-        minWidth: '250px',
+        minWidth: '230px',
         maxWidth: '300px',
         display: 'flex',
         flexDirection: 'column',
@@ -154,7 +156,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         <Box 
             component="form" 
             onSubmit={(e) => { onSubmit(e); }} 
-            sx={FormStyle}
+            sx={{...FormStyle, ...Transform}}
         >
             <Box>
                 <Box
