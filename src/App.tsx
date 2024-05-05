@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import RentCarForm from './components/RentCarForm';
-import { FormResults } from './components/FormResult';
-import { FormResultsMobile} from './components/FormResultMobile';
+import RentCarForm from './components/forms/RentCarForm';
+import { FormResults } from './components/cards/FormResult';
+import { FormResultsMobile} from './components/cards/FormResultMobile';
 import { RentCar, initialFormState } from './interfaces';
 import { ThemeProvider } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
@@ -33,17 +33,18 @@ function App() {
   }
 
   const RentCar = {
-    width: {xs: '100%', md: '30%'},
+    width: {xs: '100%', md: '25%', lg: '30%'},
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   }
 
   const FormResult = {
-    width: {xs: '100%', md: '60%'},
+    width: {xs: '100%', md: '67%', lg: '60%'},
     display: 'flex',
+    flexDirection: {lg: 'row', xs: 'column'},
     justifyContent: 'space-around',
-    alignItems: 'start',
+    alignItems: {lg: 'start', md: 'center', xs: 'center'},
   }
 
   return (
