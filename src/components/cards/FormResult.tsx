@@ -1,7 +1,8 @@
 import React from 'react';
-import { RentCar } from '../interfaces';
-import { StyledTableCell, StyledTableRow, StyledButton } from './styledComponents/StyledComponent'
-import { Table, TableBody, TableContainer, TableHead, TableRow, Paper, useTheme } from '@mui/material';
+import { RentCar } from '../../interfaces';
+import { StyledTableCell, StyledTableRow, StyledButton } from '../styledComponents/StyledComponent'
+import { createTransform } from '../animations/animation' 
+import { Table, TableBody, TableContainer, TableHead, TableRow, useTheme } from '@mui/material';
 
 interface FormResultsProps {
   forms: RentCar[];
@@ -10,10 +11,13 @@ interface FormResultsProps {
 
 export const FormResults: React.FC<FormResultsProps> = ({ forms, onDelete }) => {
   const theme = useTheme()
+  const Transform = createTransform(theme)
 
   const FormResultStyle = {
+    ...Transform,
     display: 'flex',
     width: '100%',
+    minWidth: '820px',
     flexDirection: 'column',
     justifyContent: 'space-around',
     marginBottom: '20px',
@@ -24,7 +28,7 @@ export const FormResults: React.FC<FormResultsProps> = ({ forms, onDelete }) => 
   }
 
   return (
-    <TableContainer component={Paper} sx={FormResultStyle}>
+    <TableContainer sx={FormResultStyle}>
       <Table aria-label="customize table">
         <TableHead>
           <TableRow>
