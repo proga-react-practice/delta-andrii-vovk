@@ -51,8 +51,8 @@ export const FormResults: React.FC<FormResultsProps> = ({ forms, onDelete }) => 
               <StyledTableCell>{form.phoneNumber}</StyledTableCell>
               <StyledTableCell>{form.email}</StyledTableCell>
               <StyledTableCell>{form.placeOfIssue}</StyledTableCell>
-              <StyledTableCell>{form.startRentDate.format('YYYY-MM-DD hh:mm A')}</StyledTableCell>
-              <StyledTableCell>{form.finishRentDate.format('YYYY-MM-DD hh:mm A')}</StyledTableCell>
+              <StyledTableCell>{form.startRentDate.format('YYYY-MM-DD HH:mm')}</StyledTableCell>
+              <StyledTableCell>{form.finishRentDate.format('YYYY-MM-DD HH:mm')}</StyledTableCell>
               <StyledTableCell>{form.comments}</StyledTableCell>
               <StyledTableCell>
                 <StyledButton onClick={() => onDelete(index)}>Delete</StyledButton>

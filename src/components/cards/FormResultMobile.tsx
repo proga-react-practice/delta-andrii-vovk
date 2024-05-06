@@ -50,11 +50,11 @@ export const FormResultsMobile: React.FC<FormResultsMobileProps> = ({ form, onDe
                   </StyledTableRow>
                   <StyledTableRow>
                       <StyledTableCellMobile>Start Rent Date</StyledTableCellMobile>
-                      <StyledTableCellMobile>{form.startRentDate.format('YYYY-MM-DD')}</StyledTableCellMobile>
+                      <StyledTableCellMobile>{form.startRentDate.format('YYYY-MM-DD HH:mm')}</StyledTableCellMobile>
                   </StyledTableRow>
                   <StyledTableRow>
                       <StyledTableCellMobile>End Rent Date</StyledTableCellMobile>
-                      <StyledTableCellMobile>{form.finishRentDate.format('YYYY-MM-DD')}</StyledTableCellMobile>
+                      <StyledTableCellMobile>{form.finishRentDate.format('YYYY-MM-DD HH:mm')}</StyledTableCellMobile>
                   </StyledTableRow>
                   <StyledTableRow>
                       <StyledTableCellMobile>Comments</StyledTableCellMobile>
