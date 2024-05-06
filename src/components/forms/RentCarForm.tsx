@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import dayjs, { Dayjs } from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
 import InputMask from 'react-input-mask';
 import { RentCar, initialFormState } from '../../interfaces';
 import { Button, Box, useTheme, FormHelperText } from '@mui/material';
@@ -21,7 +22,8 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
     const [error, setError] = React.useState<DateTimeValidationError | null>(null);
 
     const theme = useTheme();
-    const Transform = createTransform(theme)
+    const Transform = createTransform(theme);
+    dayjs.extend(advancedFormat);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -92,6 +94,13 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
         handleChange(e);
     }; 
 
+    const handleSubmit = (e: React.FormEvent) => {
+        onSubmit(e);
+        const newStartRentDate = dayjs();
+        const newFinishRentDate = newStartRentDate.add(5, 'hour');
+        setForm(prevForm => ({ ...prevForm, startRentDate: newStartRentDate, finishRentDate: newFinishRentDate }));
+    };
+
     const FormStyle = {
         minWidth: '230px',
         maxWidth: '300px',
@@ -155,7 +164,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
     return (
         <Box 
             component="form" 
-            onSubmit={(e) => { onSubmit(e); }} 
+            onSubmit={ handleSubmit } 
             sx={{...FormStyle, ...Transform}}
         >
             <Box>
@@ -240,7 +249,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                     name="startRentDate"
                     value={form.startRentDate}
                     onChange={handleStartRentDateChange}
-                    format="YYYY-MM-DD hh:mm A"
+                    format="YYYY-MM-DD HH:mm"
                     minDateTime={dayjs().subtract(1, 'minutes')}
                     sx={DateAndTimeStyle}
                 />
@@ -250,7 +259,7 @@ const RentCarForm: React.FC<RentCarFormProps> = ({ form, setForm, onSubmit}) => 
                     name="finishRentDate"
                     value={form.finishRentDate}
                     onChange={handleDateChange('finishRentDate')}
-                    format="YYYY-MM-DD hh:mm A"
+                    format="YYYY-MM-DD HH:mm"
                     minDateTime={form.startRentDate ? dayjs(form.startRentDate).add(5, 'h') : dayjs()}
                     onError={(newError) => setError(newError)}
                     slotProps={{
