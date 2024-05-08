@@ -1,6 +1,8 @@
 import React from 'react';
 import { RentCar } from '../../interfaces';
-import { StyledTableCell, StyledTableRow, StyledButton } from '../styledComponents/StyledComponent'
+import { StyledTableCell } from '../styledComponents/StyledTableCell'
+import { StyledTableRow } from '../styledComponents/StyledTableRow'
+import { StyledButton } from '../styledComponents/StyledButton'
 import { createTransform } from '../animations/animation' 
 import { Table, TableBody, TableContainer, TableHead, TableRow, useTheme } from '@mui/material';
 

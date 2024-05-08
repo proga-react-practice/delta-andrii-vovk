@@ -7,7 +7,7 @@ import { Button, Box, useTheme, FormHelperText } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { StyledTextField } from '../styledComponents/StyledComponent'
+import { StyledTextField } from '../styledComponents/StyledTextField'
 import { DateTimeValidationError } from '@mui/x-date-pickers/models';
 import { createTransform } from '../animations/animation' 
 
